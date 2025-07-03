@@ -46,7 +46,7 @@ import { onClickOutside } from '@vueuse/core';
 
 
 definePageMeta({
-    layout: 'default' // Явное указание layout
+  layout: 'default' // Явное указание layout
 });
 </script>
 

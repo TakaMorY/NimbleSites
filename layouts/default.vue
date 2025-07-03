@@ -10,24 +10,11 @@
 
 
                         <div class="relative">
-                            <!-- Кнопка бургера (только на мобильных) -->
-                            <button @click="isMenuOpen = !isMenuOpen" class="lg:hidden p-2 focus:outline-none"
-                                aria-label="Меню">
-                                <svg class="w-8 h-8 text-[#e2e2e2]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path v-if="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                                    <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-
-                            <!-- Десктопное меню (как у вас было) -->
-                            <div class="hidden lg:block">
-                                <div class="flex space-x-10 text-base font-bold text-black/60">
+                            <div class="hidden lg:block ">
+                                <div class="flex space-x-10 text-base font-bold text-black/60 ">
                                     <div
                                         class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                        <NuxtLink to="#cardstova">Услуги</NuxtLink>
+                                        <NuxtLink to="#cardstovar">Услуги</NuxtLink>
                                     </div>
                                     <div
                                         class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
@@ -44,40 +31,70 @@
                                 </div>
                             </div>
 
-                            <!-- Мобильное меню с анимацией -->
-                            <Transition name="mobile-menu">
-                                <div v-if="isMenuOpen" ref="menuRef"
-                                    class="lg:hidden fixed inset-0 bg-gray-900/95 z-50 pt-20 px-4">
-                                    <div class="flex flex-col space-y-6 text-center">
-                                        <NuxtLink to="#cardstova"
-                                            class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
-                                            @click="isMenuOpen = false">
-                                            Услуги
-                                        </NuxtLink>
-                                        <NuxtLink to="#whyus"
-                                            class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
-                                            @click="isMenuOpen = false">
-                                            О нас
-                                        </NuxtLink>
-                                        <NuxtLink to="https://t.me/TakaMorY"
-                                            class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
-                                            @click="isMenuOpen = false">
-                                            Контакты
-                                        </NuxtLink>
-                                        <NuxtLink to="#features"
-                                            class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
-                                            @click="isMenuOpen = false">
-                                            Наши преимущества
-                                        </NuxtLink>
-                                    </div>
-                                </div>
-                            </Transition>
+                            <div>
+                                <!-- Кнопка бургер-меню -->
+                                <button @click="openMenu" class="lg:hidden p-2 focus:outline-none"
+                                    aria-label="Открыть меню">
+                                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </button>
 
-                            <!-- Затемнение фона -->
-                            <Transition name="fade">
-                                <div v-if="isMenuOpen" @click="isMenuOpen = false"
-                                    class="fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
-                            </Transition>
+                                <!-- Мобильное меню -->
+                                <transition name="menu">
+                                    <div v-show="isMenuOpen" class="fixed inset-0 z-[100]" @click="closeMenu">
+                                        <!-- Затемнение -->
+                                        <div class="absolute inset-0 bg-black bg-opacity-70"></div>
+
+                                        <!-- Контент меню -->
+                                        <div class="absolute top-0 right-0 h-full w-4/5 bg-[#7216f4] shadow-xl overflow-y-auto"
+                                            @click.stop>
+                                            <div class="p-4 flex justify-end">
+                                                <button @click="closeMenu" class="p-2 text-white"
+                                                    aria-label="Закрыть меню">
+                                                    <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                        viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </div>
+
+                                            <nav class="px-6 pb-8 ">
+                                                <ul class="space-y-4">
+                                                    <li>
+                                                        <NuxtLink to="#cardstovar" @click="closeMenu"
+                                                            class="block py-3 text-lg font-medium text-white border-b border-gray-100">
+                                                            Услуги
+                                                        </NuxtLink>
+                                                    </li>
+                                                    <li>
+                                                        <NuxtLink to="#whyus" @click="closeMenu"
+                                                            class="block py-3 text-lg font-medium text-white border-b border-gray-100">
+                                                            О нас
+                                                        </NuxtLink>
+                                                    </li>
+                                                    <li>
+                                                        <NuxtLink to="https://t.me/TakaMorY" @click="closeMenu"
+                                                            class="block py-3 text-lg font-medium text-white border-b border-gray-100">
+                                                            Контакты
+                                                        </NuxtLink>
+                                                    </li>
+                                                    <li>
+                                                        <NuxtLink to="#features" @click="closeMenu"
+                                                            class="block py-3 text-lg font-medium text-white border-b border-gray-100">
+                                                            Наши преимущества
+                                                        </NuxtLink>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </transition>
+                            </div>
+
                         </div>
 
                     </div>
@@ -159,7 +176,7 @@
                                 <NuxtLink to="/">
                                     <div class="flex items-center space-x-2 text-2xl font-medium">
                                         <span>
-                                            <img src="https://www.freepik.com/icon/tribal_10483290#fromView=family&page=1&position=2&uuid=164b1d44-7966-490a-a4c9-0256ddc80f34"
+                                            <img src="https://avatars.mds.yandex.net/i?id=3f0af97f19e04a31bea1173a0b655249eaa9de4b-6503967-images-thumbs&n=13"
                                                 alt="" width="64" height="64" class="w-16">
                                         </span>
                                         <span class="text-[#f9d1f9]">NimbleSites</span>
@@ -249,22 +266,27 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { onClickOutside } from '@vueuse/core';
-
 const isMenuOpen = ref(false);
-const menuRef = ref(null);
 
-// Закрытие при клике вне меню
-onClickOutside(menuRef, () => {
+const openMenu = () => {
+    isMenuOpen.value = true;
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+};
+
+const closeMenu = () => {
     isMenuOpen.value = false;
+    document.body.style.overflow = '';
+    document.body.style.position = '';
+};
+
+// Закрытие при изменении ориентации
+onMounted(() => {
+    window.addEventListener('orientationchange', closeMenu);
 });
 
-// Блокировка скролла при открытом меню
-watch(isMenuOpen, (val) => {
-    if (process.client) {
-        document.body.style.overflow = val ? 'hidden' : 'auto';
-    }
+onBeforeUnmount(() => {
+    window.removeEventListener('orientationchange', closeMenu);
 });
 
 onMounted(() => {
@@ -303,26 +325,23 @@ onMounted(() => {
 </script>
 
 <style>
-/* Анимация меню */
-.mobile-menu-enter-active,
-.mobile-menu-leave-active {
-    transition: all 0.3s ease;
-}
-
-.mobile-menu-enter-from,
-.mobile-menu-leave-to {
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-/* Анимация затемнения */
-.fade-enter-active,
-.fade-leave-active {
+.menu-enter-active,
+.menu-leave-active {
     transition: opacity 0.3s;
 }
 
-.fade-enter-from,
-.fade-leave-to {
+.menu-enter-from,
+.menu-leave-to {
     opacity: 0;
+}
+
+.menu-enter-active .absolute.right-0,
+.menu-leave-active .absolute.right-0 {
+    transition: transform 0.3s ease;
+}
+
+.menu-enter-from .absolute.right-0,
+.menu-leave-to .absolute.right-0 {
+    transform: translateX(100%);
 }
 </style>
