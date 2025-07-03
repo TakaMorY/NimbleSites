@@ -116,15 +116,15 @@ onMounted(() => {
                             </div>
                             <div
                                 class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                <NuxtLink to="/contact">Контакты</NuxtLink>
+                                <NuxtLink to="">Контакты</NuxtLink>
                             </div>
                             <div
                                 class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                <NuxtLink to="/about">О нас</NuxtLink>
+                                <NuxtLink to="">О нас</NuxtLink>
                             </div>
                             <div
                                 class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                <NuxtLink to="/cabinet">Услуги</NuxtLink>
+                                <NuxtLink to="">Услуги</NuxtLink>
                             </div>
                         </div>
                     </div>
@@ -432,7 +432,7 @@ onMounted(() => {
             </div>
         </section>
 
-        <section ref="section" class="relative py-10 sm:py-10 lg:py-24 mt-20 mb-20">
+        <section ref="section" class="relative py-10 sm:py-10 lg:py-24">
             <div class="absolute inset-0 -z-10 overflow-hidden">
                 <div class="wave-bg"></div>
                 <div class="wave-bg delay-1"></div>
@@ -529,7 +529,7 @@ onMounted(() => {
                                 <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Компания</h3>
                                 <ul role="list" class="mt-6 space-y-4">
                                     <li>
-                                        <a href="/aboutus"
+                                        <a href=""
                                             class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">О
                                             нас
                                         </a>
@@ -540,7 +540,7 @@ onMounted(() => {
                                         </a>
                                     </li> -->
                                     <li>
-                                        <a href="/contactus"
+                                        <a href=""
                                             class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Связаться
                                             с нами
                                         </a>
@@ -574,18 +574,18 @@ onMounted(() => {
                                 <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Пользователю</h3>
                                 <ul role="list" class="mt-6 space-y-4">
                                     <li>
-                                        <a href="/predictiveanalysis"
+                                        <a href=""
                                             class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Predictive
                                             Analysis
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/customerexperience"
+                                        <a href=""
                                             class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Отзывы
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/automation"
+                                        <a href=""
                                             class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Наши
                                             работы
                                         </a>
@@ -598,12 +598,12 @@ onMounted(() => {
                                 <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Ресурсы</h3>
                                 <ul role="list" class="mt-6 space-y-4">
                                     <li>
-                                        <a href="/pricing"
+                                        <a href=""
                                             class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Услуги
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/casestudies"
+                                        <a href=""
                                             class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out  hover:text-[c8c8c8]">Шаблоны
                                             работ
 
