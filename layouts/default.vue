@@ -4,7 +4,7 @@
         <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-float-delay">
         </div>
 
-        
+
 
         <!-- Градиентный фон -->
         <div class="fixed inset-0 bg-gradient-to-br from-white via-blue-50 to-purple-50 -z-10"></div>
@@ -215,6 +215,10 @@
 </template>
 
 <script setup>
+definePageMeta({
+    layout: 'default' // Явное указание layout
+});
+
 import MobileMenu from '~/components/MobileMenu.vue';
 
 
