@@ -12,12 +12,13 @@
   <NuxtLayout>
 
 
-    <div>
-      <ScrollToTop />
-    </div>
-    <NuxtPage :key="$route.fullPath" class="relative z-10" />
+
+    <NuxtPage />
 
   </NuxtLayout>
+  <div>
+    <ScrollToTop />
+  </div>
 
 </template>
 <script setup>
