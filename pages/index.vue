@@ -36,6 +36,29 @@ onMounted(() => {
     }
 });
 
+
+import { ref } from 'vue';
+import { onClickOutside } from '@vueuse/core';
+
+const isMenuOpen = ref(false);
+const menuRef = ref(null);
+
+// Закрытие при клике вне меню
+onClickOutside(menuRef, () => {
+    isMenuOpen.value = false;
+});
+
+// Блокировка скролла при открытом меню
+watch(isMenuOpen, (val) => {
+    if (process.client) {
+        document.body.style.overflow = val ? 'hidden' : 'auto';
+    }
+});
+
+
+
+
+
 </script>
 
 <style>
@@ -89,6 +112,32 @@ onMounted(() => {
         transform: translateY(0);
     }
 }
+
+
+
+
+/* Анимация меню */
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Анимация затемнения */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
 </style>
 
 
@@ -105,34 +154,81 @@ onMounted(() => {
                     </div>
 
 
+                    <div class="relative">
+                        <!-- Кнопка бургер (видна только на мобильных) -->
+                        <button @click="isMenuOpen = !isMenuOpen" class="lg:hidden p-2 focus:outline-none"
+                            aria-label="Меню">
+                            <svg class="w-8 h-8 text-[#e2e2e2]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path v-if="!isMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                                <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
 
 
 
-                    <div class="hidden lg:block ">
-                        <div class="flex space-x-10 text-base font-bold text-black/60 ">
-                            <div
-                                class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                <NuxtLink to="#cardstovar">Услуги</NuxtLink>
-                            </div>
-                            <div
-                                class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                <NuxtLink to="">Контакты</NuxtLink>
-                            </div>
-                            <div
-                                class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                <NuxtLink to="">О нас</NuxtLink>
-                            </div>
-                            <div
-                                class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                <NuxtLink to="">Услуги</NuxtLink>
+
+                        <div class="hidden lg:block ">
+                            <div class="flex space-x-10 text-base font-bold text-black/60 ">
+                                <div
+                                    class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
+                                    <NuxtLink to="#cardstovar">Услуги</NuxtLink>
+                                </div>
+                                <div
+                                    class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
+                                    <NuxtLink to="#whyus">О нас</NuxtLink>
+                                </div>
+                                <div
+                                    class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
+                                    <NuxtLink to="https://t.me/TakaMorY">Контакты</NuxtLink>
+                                </div>
+                                <div
+                                    class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
+                                    <NuxtLink to="#features">Наши преимущества</NuxtLink>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                        <!-- Мобильное меню с анимацией -->
+                        <Transition name="mobile-menu">
+                            <div v-if="isMenuOpen" ref="menuRef"
+                                class="lg:hidden fixed inset-0 bg-gray-900/95 z-50 pt-20 px-4">
+                                <div class="flex flex-col space-y-6 text-center">
+                                    <NuxtLink to="#cardstovar"
+                                        class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
+                                        @click="isMenuOpen = false">
+                                        Услуги
+                                    </NuxtLink>
+                                    <NuxtLink to="#whyus" class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
+                                        @click="isMenuOpen = false">
+                                        О нас
+                                    </NuxtLink>
+                                    <NuxtLink to="https://t.me/TakaMorY"
+                                        class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
+                                        @click="isMenuOpen = false">
+                                        Контакты
+                                    </NuxtLink>
+                                    <NuxtLink to="#features" class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
+                                        @click="isMenuOpen = false">
+                                        Наши преимущества
+                                    </NuxtLink>
+                                </div>
+                            </div>
+                        </Transition>
+
+                        <!-- Затемнение фона -->
+                        <Transition name="fade">
+                            <div v-if="isMenuOpen" @click="isMenuOpen = false"
+                                class="fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
+                        </Transition>
+                    </div>
 
                 </div>
             </nav>
         </div>
+
+
         <div class="flex items-center">
             <div class="flex items-center pl-8 md:pl-16 lg:pl-24">
                 <h1 class="mt-70 mb-70 text-4xl md:text-5xl font-bold leading-tight transition-all duration-2000 ease-out"
@@ -191,7 +287,7 @@ onMounted(() => {
     <main>
         <section class="mt-20 mb-20" id="cardstovar">
             <div class="container mx-auto px-4 py-12">
-                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">С чем я могу вам помочь?</h2>
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">С чем мы можем вам помочь?</h2>
 
                 <!-- Сетка карточек -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-all">
@@ -199,110 +295,111 @@ onMounted(() => {
                     <!-- Карточка 1 -->
                     <div
                         class="bg-[#7216f4] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-white relative overflow-hidden">
-                        <div
+                        <NuxtLink to="https://t.me/TakaMorY"
                             class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                             </svg>
-                        </div>
+                        </NuxtLink>
 
-                        <h3 class="text-xl font-semibold mb-18">Веб-дизайн</h3>
-                        <div class="bg-white/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">7-14 дней</div>
+                        <h3 class="text-xl font-semibold mb-18">Web-разработка</h3>
+                        <div class="bg-white/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">3-14 дней</div>
                         <p class="text-white/80 mb-4">Создание современных интерфейсов</p>
-                        <div class="text-[#f9d1f9] font-bold text-lg">от 30 000 ₽</div>
+                        <div class="text-[#f9d1f9] font-bold text-lg">от 5 000 ₽</div>
                     </div>
-
-                    <!-- Карточка 2 -->
-                    <div
-                        class="bg-[#f9d1f9] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-gray-800 relative overflow-hidden">
-                        <div
-                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-18">Дизайн презентаций</h3>
-                        <div class="bg-[#7216f4]/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">3-7 дней</div>
-                        <p class="text-gray-600 mb-4">Профессиональные слайды</p>
-                        <div class="text-[#7216f4] font-bold text-lg">от 50 000 ₽</div>
-                    </div>
-
-                    <!-- Карточка 3 -->
-                    <div
-                        class="bg-[#7216f4] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-white relative overflow-hidden">
-                        <div
-                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-18">Дизайн карточек</h3>
-                        <div class="bg-white/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">5-10 дней</div>
-                        <p class="text-white/80 mb-4">Визуал для продуктов</p>
-                        <div class="text-[#f9d1f9] font-bold text-lg">от 50 000 ₽</div>
-                    </div>
-
-                    <!-- Карточка 4 -->
-                    <div
-                        class="bg-[#f9d1f9] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-gray-800 relative overflow-hidden">
-                        <div
-                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-18">Оформление соц. сетей</h3>
-                        <div class="bg-[#7216f4]/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">7-14 дней</div>
-                        <p class="text-gray-600 mb-4">Контент для Instagram и др.</p>
-                        <div class="text-[#7216f4] font-bold text-lg">от 30 000 ₽</div>
-                    </div>
-
-                    <!-- Карточка 5 -->
-                    <div
-                        class="bg-[#7216f4] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-white relative overflow-hidden">
-                        <div
-                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
-                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                            </svg>
-                        </div>
-
-                        <h3 class="text-xl font-semibold mb-18">Обработка фото</h3>
-                        <div class="bg-white/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">1-3 дня</div>
-                        <p class="text-white/80 mb-4">Ретушь и коррекция</p>
-                        <div class="text-[#f9d1f9] font-bold text-lg">от 10 000 ₽</div>
-                    </div>
-
                     <!-- Карточка 6 -->
                     <div
                         class="bg-[#f9d1f9] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-gray-800 relative overflow-hidden">
-                        <div
+                        <NuxtLink to="https://t.me/TakaMorY"
                             class="absolute  top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
                             <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                             </svg>
-                        </div>
+                        </NuxtLink>
 
                         <h3 class="text-xl font-semibold mb-18">Работа с нейросетями</h3>
                         <div class="bg-[#7216f4]/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">3-5 дней</div>
                         <p class="text-gray-600 mb-4">AI-решения для бизнеса</p>
-                        <div class="text-[#7216f4] font-bold text-lg">от 20 000 ₽</div>
+                        <div class="text-[#7216f4] font-bold text-lg">от 200 ₽</div>
                     </div>
+
+
+                    <!-- Карточка 3 -->
+                    <div
+                        class="bg-[#7216f4] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-white relative overflow-hidden">
+                        <NuxtLink to="https://t.me/TakaMorY"
+                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </NuxtLink>
+
+                        <h3 class="text-xl font-semibold mb-18">Дизайн карточек</h3>
+                        <div class="bg-white/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">2-5 дней</div>
+                        <p class="text-white/80 mb-4">Визуал для продуктов</p>
+                        <div class="text-[#f9d1f9] font-bold text-lg">от 500 ₽</div>
+                    </div>
+
+                    <!-- Карточка 4 -->
+                    <div
+                        class="bg-[#f9d1f9] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-gray-800 relative overflow-hidden">
+                        <NuxtLink to="https://t.me/TakaMorY"
+                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </NuxtLink>
+
+                        <h3 class="text-xl font-semibold mb-18">Оформление соц. сетей</h3>
+                        <div class="bg-[#7216f4]/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">2-14 дней</div>
+                        <p class="text-gray-600 mb-4">Контент для Instagram и др.</p>
+                        <div class="text-[#7216f4] font-bold text-lg">от 500 ₽</div>
+                    </div>
+
+                    <!-- Карточка 5 -->
+                    <div
+                        class="bg-[#7216f4] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-white relative overflow-hidden">
+                        <NuxtLink to="https://t.me/TakaMorY"
+                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </NuxtLink>
+
+                        <h3 class="text-xl font-semibold mb-18">Обработка фото</h3>
+                        <div class="bg-white/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">1-3 дня</div>
+                        <p class="text-white/80 mb-4">Ретушь и коррекция</p>
+                        <div class="text-[#f9d1f9] font-bold text-lg">от 10 000 ₽</div>
+                    </div>
+                    <!-- Карточка 2 -->
+                    <div
+                        class="bg-[#f9d1f9] rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-gray-800 relative overflow-hidden">
+                        <NuxtLink to="https://t.me/TakaMorY"
+                            class="absolute top-5 right-5 w-10 h-10 bg-black rounded-full flex items-center justify-center transition-all group-hover:bg-black/90 hover:scale-110">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </NuxtLink>
+
+                        <h3 class="text-xl font-semibold mb-18">Продажа шаблонов</h3>
+                        <div class="bg-[#7216f4]/20 text-sm px-3 py-1 rounded-full mb-3 inline-block">Моментально</div>
+                        <p class="text-gray-600 mb-4">Продадим шаблон сайта на ваш выбор</p>
+                        <div class="text-[#7216f4] font-bold text-lg">от 2000 ₽</div>
+                    </div>
+
+
                 </div>
 
                 <!-- Призыв к действию -->
@@ -377,7 +474,7 @@ onMounted(() => {
                     <h3 class="mt-10 mb-6 max-w-2xl mx-auto text-lg">Кастомизация</h3>
                     <hr>
                     <p class="my-4 mb-0 font-normal leading-relaxed tracking-wide">Адаптируем внешний
-                        вид вашего сайта, от цветовой гаммы до размера шрифта, исходя из вашиз предпочтений.
+                        вид вашего сайта, от цветовой гаммы до размера шрифта, исходя из ваших предпочтений.
                     </p>
                 </div>
 
@@ -429,6 +526,52 @@ onMounted(() => {
                 </div>
 
 
+            </div>
+            <div id="whyus" class="container mx-auto px-4">
+                <div class="mb-20 mt-60">
+                    <!-- Heading -->
+                    <h2 class="text-[#f9d1f9] text-lg mb-2" data-aos="fade-down">
+                        Немного о нас
+                    </h2>
+                    <h3 class="mb-4 text-3xl font-bold text-white section-title" data-aos="fade-down">
+                        Создаём сайты, которые трудно забыть
+                    </h3>
+                    <p class="mb-8 max-w-3xl text-[#f9d1f9]" data-aos="fade-down">
+                        Обладая более чем двулетним опытом в web-разработке, мы овладели искусством
+                        рассказывать истории с помощью наших сайтов. Наша страсть заключается в том, чтобы
+                        создавать сайты и превращать их в вечные воспоминания.
+                    </p>
+
+                    <!-- About Cards Section -->
+                    <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                        <!-- Card 1 -->
+                        <div class="rounded-lg bg-white p-6 text-center">
+                            <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">2+</h4>
+                            <p class="text-gray-600">Года на рынке</p>
+                        </div>
+                        <div class="rounded-lg  bg-white p-6 text-center">
+                            <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">Множество</h4>
+                            <p class="text-gray-600">Довольных клиентов</p>
+                        </div>
+                        <div class="rounded-lg bg-white p-6 text-center">
+                            <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">4.7</h4>
+                            <p class="text-gray-600">Средняя оценка</p>
+                        </div>
+                        <div class="rounded-lg bg-white p-6 text-center">
+                            <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">10+</h4>
+                            <p class="text-gray-600">Шаблонов сайтов</p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Buttons Section -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 mt-8" data-aos="fade-up">
+                    <NuxtLink to="https://t.me/TakaMorY"
+                        class="cursor-pointer rounded-full border-2 py-3 px-8 border-white text-white hover:bg-white hover:text-purple-900 transition duration-300 ease-in-out">
+                        Связаться с нами
+                    </NuxtLink>
+                </div>
             </div>
         </section>
 
@@ -489,138 +632,91 @@ onMounted(() => {
         <div class="container mx-auto p-0 md:p-8 xl:px-0">
             <div class="mx-auto max-w-7xl px-6 pb-10 pt-16">
                 <div class="xl:grid xl:grid-cols-3 xl:gap-8">
+                    <!-- Логотип и описание -->
                     <div class="space-y-4">
                         <div>
-                            <a href="/">
+                            <NuxtLink  to="/">
                                 <div class="flex items-center space-x-2 text-2xl font-medium">
                                     <span>
                                         <img src="" alt="" width="64" height="64" class="w-16">
                                     </span>
                                     <span class="text-[#f9d1f9]">NimbleSites</span>
                                 </div>
-
-                            </a>
+                            </NuxtLink>
                         </div>
-                        <div class="max-w-md pr-16 text-md text-[#c8c8c8]">Повысьте производительность и эффективность
-                            вашего бизнеса с помощью передовых решений в веб-разработке.
+                        <div class="max-w-md pr-16 text-md text-[#c8c8c8]">
+                            Повысьте производительность и эффективность вашего бизнеса с помощью передовых решений в
+                            веб-разработке.
                         </div>
-                        <!-- <div class="flex space-x-2">
-                            <a href="" target="_blank" class="text-gray-200 hover:text-gray-200">
-                                <span class="sr-only">Linkedin</span><svg fill="currentColor" viewBox="0 0 24 24"
-                                    class="h-6 w-6" aria-hidden="true">
-                                    <path fill-rule="evenodd"
-                                        d="M16.338 16.338H13.67V12.16c0-.995-.017-2.277-1.387-2.277-1.39 0-1.601 1.086-1.601 2.207v4.248H8.014v-8.59h2.559v1.174h.037c.356-.675 1.227-1.387 2.526-1.387 2.703 0 3.203 1.778 3.203 4.092v4.711zM5.005 6.575a1.548 1.548 0 11-.003-3.096 1.548 1.548 0 01.003 3.096zm-1.337 9.763H6.34v-8.59H3.667v8.59zM17.668 1H2.328C1.595 1 1 1.581 1 2.298v15.403C1 18.418 1.595 19 2.328 19h15.34c.734 0 1.332-.582 1.332-1.299V2.298C19 1.581 18.402 1 17.668 1z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </a>
-                            <a href="" target="_blank" class="text-gray-200 hover:text-gray-200">
-                                <span class="sr-only">Twitter</span><svg fill="currentColor" viewBox="0 0 24 24"
-                                    class="h-6 w-6" aria-hidden="true">
-                                    <path
-                                        d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84">
-                                    </path>
-                                </svg>
-                            </a>
-                        </div> -->
                     </div>
-                    <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div class="mt-10 md:mt-0">
-                                <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Компания</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li>
-                                        <a href=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">О
-                                            нас
-                                        </a>
-                                    </li>
-                                    <!-- <li>
-                                        <a href="/careers"
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Careers
-                                        </a>
-                                    </li> -->
-                                    <li>
-                                        <a href=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Связаться
-                                            с нами
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!-- <div>
-                                <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Our Solutions</h3>
-                                <ul role="list" class="mt-6 space-y-4 ">
-                                    <li>
-                                        <a href="/aiplatform"
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out   hover:text-[c8c8c8]">AI
-                                            Platform
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/aialgorithms"
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out   hover:text-[c8c8c8]">AI
-                                            Algorithms
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/industryapplications"
-                                            class="text-md leading-6 text-[#e2e2e2]  hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out   hover:text-[c8c8c8]">Industry
-                                            Applications
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> -->
-                            <div class="mt-10 md:mt-0">
-                                <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Пользователю</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li>
-                                        <a href=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Predictive
-                                            Analysis
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Отзывы
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Наши
-                                            работы
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+
+                    <!-- Навигационные колонки -->
+                    <div class="mt-16 grid grid-cols-3 gap-8 xl:col-span-2 xl:mt-0">
+                        <!-- Колонка 1: Ресурсы -->
+                        <div>
+                            <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Ресурсы</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li>
+                                    <NuxtLink to=""
+                                        class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                        Шаблоны работ
+                                    </NuxtLink>
+                                </li>
+                                <li>
+                                    <NuxtLink  to=""
+                                        class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                        Наши работы
+                                    </NuxtLink>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="md:grid md:grid-cols-2 md:gap-8">
-                            <div>
-                                <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Ресурсы</h3>
-                                <ul role="list" class="mt-6 space-y-4">
-                                    <li>
-                                        <a href=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out   hover:text-[c8c8c8]">Услуги
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-500 ease-linear ease-in-out ease-in-out  hover:text-[c8c8c8]">Шаблоны
-                                            работ
 
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <!-- Колонка 2: Компания -->
+                        <div>
+                            <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Компания</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li>
+                                    <NuxtLink  to="#whyus"
+                                        class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                        О нас
+                                    </NuxtLink>
+                                </li>
+                                <li>
+                                    <NuxtLink  to="https://t.me/TakaMorY"
+                                        class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                        Связаться с нами
+                                    </NuxtLink>
+                                </li>
+                            </ul>
+                        </div>
 
+                        <!-- Колонка 3: Пользователю -->
+                        <div>
+                            <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Пользователю</h3>
+                            <ul role="list" class="mt-4 space-y-4">
+                                <li>
+                                    <NuxtLink  to=""
+                                        class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                        Отзывы
+                                    </NuxtLink>
+                                </li>
+                                <li>
+                                    <NuxtLink  to="#features"
+                                        class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                        Почему именно мы
+                                    </NuxtLink>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>
+
+                <!-- Футер -->
                 <div class="mt-16 border-t border-gray-400/30 pt-8 sm:mt-20 lg:mt-24">
                     <div class="text-md text-center text-white">
-                        Все права защищены © 2025 . Созданно
+                        Все права защищены © 2025. Создано
                         <span class="text-[#c8c8c8]">♥</span>
-                        <a rel="noopener" href="/"> NimbleSites.
-                        </a>
+                        <NuxtLink to="/" class="hover:text-[#f9d1f9] transition-colors">NimbleSites</NuxtLink>.
                     </div>
                 </div>
             </div>

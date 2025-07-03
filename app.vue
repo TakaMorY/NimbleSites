@@ -22,3 +22,10 @@
     <NuxtPage class="relative z-10" />
   </div>
 </template>
+<script setup>
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - NimbleSites` : 'NimbleSites'
+  }
+})
+</script>
