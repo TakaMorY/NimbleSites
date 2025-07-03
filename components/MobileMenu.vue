@@ -16,7 +16,7 @@
                 <!-- Контент меню -->
                 <div class="absolute top-0 right-0 h-full w-4/5 bg-[#7216f4] shadow-xl overflow-y-auto" @click.stop>
                     <div class="p-4 flex justify-end">
-                        <button @click="closeMenu" class="p-2 text-gray-500" aria-label="Закрыть меню">
+                        <button @click="closeMenu" class="p-2 text-white" aria-label="Закрыть меню">
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M6 18L18 6M6 6l12 12" />
