@@ -110,7 +110,7 @@
             </header>
         </div>
         <main class="content">
-            <slot />
+            <NuxtPage />
         </main>
         <div>
             <footer class="bg-[#7216f4]">
@@ -219,6 +219,7 @@ definePageMeta({
     layout: 'default' // Явное указание layout
 });
 
+import { NuxtPage } from '#components';
 import MobileMenu from '~/components/MobileMenu.vue';
 
 
