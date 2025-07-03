@@ -12,8 +12,8 @@
   <NuxtLayout>
 
 
+    <NuxtPage :key="$route.fullPath" style="margin: 0; padding: 0; width: 100% " />
 
-    <NuxtPage />
 
   </NuxtLayout>
   <div>

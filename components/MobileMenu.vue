@@ -27,7 +27,7 @@
                     <nav class="px-6 pb-8">
                         <ul class="space-y-4">
                             <li>
-                                <NuxtLink to="#cardstovar" @click="closeMenu"
+                                <NuxtLink to="#cardstovar"  @click="closeMenu"
                                     class="block py-3 text-lg font-medium text-[#f9d1f9]  border-b border-gray-100">
                                     Услуги
                                 </NuxtLink>

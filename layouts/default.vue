@@ -1,5 +1,5 @@
 <template>
-    <div class="relative overflow-hidden min-h-screen">
+    <div class=" min-h-screen">
         <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-float-slow"></div>
         <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-float-delay">
         </div>
@@ -10,14 +10,14 @@
         <div class="fixed inset-0 bg-gradient-to-br from-white via-blue-50 to-purple-50 -z-10"></div>
         <div>
             <header class="bg-[#7216f4]">
-                <div class="top-0 py-1 lg:py-2 w-full bg-transparent lg:relative z-50 h-auto overflow-x-hidden">
+                <div class="top-0 py-1 lg:py-2 w-full bg-transparent lg:relative z-50 h-auto  overflow-x-hidden">
                     <nav class="z-10 sticky top-0 left-0 right-0 max-w-4xl xl:max-w-5xl mx-auto px-5 py-2.5 lg:py-4">
                         <div class="flex items-center justify-between ">
-                            <div class="flex items-center space-x-2">
+                            <div class="flex items-center space-x-2 ">
                                 <h2 class="text-[#f9d1f9]  font-bold text-2xl">NimbleSites</h2>
                             </div>
-                            <div class="hidden lg:block ">
-                                <div class="flex space-x-10 text-base font-bold text-black/60 ">
+                            <div class="hidden lg:flex ">
+                                <div class="flex space-x-10 text-base font-bold text-black/60  overflow:hidden">
                                     <div
                                         class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
                                         <NuxtLink to="#cardstovar">Услуги</NuxtLink>
@@ -95,7 +95,7 @@
                         </h1>
                     </div>
                     <div class="flex-1 pl-12">
-                        <div class="pb-10 overflow-hidden md:p-10 lg:p-0 sm:pb-0">
+                        <div class="pb-10  md:p-10 lg:p-0 sm:pb-0">
                             <img id="heroImg1"
                                 class="w-full max-w-md mx-auto md:max-w-lg lg:max-w-xl transition-all duration-1000 ease-in-out hover:scale-105"
                                 :class="visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'"
@@ -109,8 +109,8 @@
 
             </header>
         </div>
-        <main class="content">
-            <NuxtPage />
+        <main class="flex-grow">
+            <NuxtPage :key="$route.fullPath" />
         </main>
         <div>
             <footer class="bg-[#7216f4]">
@@ -214,10 +214,10 @@
 
 </template>
 
+
+
 <script setup>
-definePageMeta({
-    layout: 'default' // Явное указание layout
-});
+
 
 import { NuxtPage } from '#components';
 import MobileMenu from '~/components/MobileMenu.vue';
