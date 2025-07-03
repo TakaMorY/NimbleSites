@@ -261,4 +261,55 @@ onMounted(() => {
 .menu-leave-to .absolute.right-0 {
     transform: translateX(100%);
 }
+
+.wave-bg {
+    position: absolute;
+    bottom: 0;
+    left: -50%;
+    width: 200%;
+    height: 30vh;
+    background: linear-gradient(90deg, #7216f410 0%, #9b51e015 50%, #7216f410 100%);
+    border-radius: 50% 50% 0 0;
+    animation: wave 15s linear infinite;
+}
+
+.wave-bg.delay-1 {
+    animation-delay: 5s;
+    bottom: -5vh;
+    opacity: 0.3;
+}
+
+.wave-bg.delay-2 {
+    animation-delay: 8s;
+    bottom: -10vh;
+    opacity: 0.2;
+}
+
+@keyframes wave {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    100% {
+        transform: translateX(50%) rotate(360deg);
+    }
+}
+
+
+
+.animate-fadeIn {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 </style>
