@@ -176,7 +176,7 @@
                                 <NuxtLink to="/">
                                     <div class="flex items-center space-x-2 text-2xl font-medium">
                                         <span>
-                                            <img src="https://avatars.mds.yandex.net/i?id=3f0af97f19e04a31bea1173a0b655249eaa9de4b-6503967-images-thumbs&n=13"
+                                            <img src=""
                                                 alt="" width="64" height="64" class="w-16">
                                         </span>
                                         <span class="text-[#f9d1f9]">NimbleSites</span>
