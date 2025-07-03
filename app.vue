@@ -23,6 +23,10 @@
 
       <NuxtPage :key="$route.fullPath" class="relative z-10" />
     </div>
+    <div>
+      <ScrollToTop />
+    </div>
+
   </NuxtLayout>
 
 </template>

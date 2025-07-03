@@ -10,7 +10,7 @@
 
 
                         <div class="relative">
-                            <!-- Кнопка бургер (видна только на мобильных) -->
+                            <!-- Кнопка бургера (только на мобильных) -->
                             <button @click="isMenuOpen = !isMenuOpen" class="lg:hidden p-2 focus:outline-none"
                                 aria-label="Меню">
                                 <svg class="w-8 h-8 text-[#e2e2e2]" fill="none" stroke="currentColor"
@@ -22,14 +22,12 @@
                                 </svg>
                             </button>
 
-
-
-
-                            <div class="hidden lg:block ">
-                                <div class="flex space-x-10 text-base font-bold text-black/60 ">
+                            <!-- Десктопное меню (как у вас было) -->
+                            <div class="hidden lg:block">
+                                <div class="flex space-x-10 text-base font-bold text-black/60">
                                     <div
                                         class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
-                                        <NuxtLink to="#cardstovar">Услуги</NuxtLink>
+                                        <NuxtLink to="#cardstova">Услуги</NuxtLink>
                                     </div>
                                     <div
                                         class="text-[#e2e2e2] hover:underline hover:underline-offset-4 hover:w-fit transition-all duration-100 ease-linear">
@@ -49,9 +47,9 @@
                             <!-- Мобильное меню с анимацией -->
                             <Transition name="mobile-menu">
                                 <div v-if="isMenuOpen" ref="menuRef"
-                                    class="hidden fixed inset-0 bg-gray-900/95 z-50 pt-20 px-4">
+                                    class="lg:hidden fixed inset-0 bg-gray-900/95 z-50 pt-20 px-4">
                                     <div class="flex flex-col space-y-6 text-center">
-                                        <NuxtLink to="#cardstovar"
+                                        <NuxtLink to="#cardstova"
                                             class="text-[#e2e2e2] text-2xl py-3 hover:text-white transition-colors"
                                             @click="isMenuOpen = false">
                                             Услуги
@@ -161,7 +159,7 @@
                                 <NuxtLink to="/">
                                     <div class="flex items-center space-x-2 text-2xl font-medium">
                                         <span>
-                                            <img src="C:\Users\User\Desktop\Работа\nimblesites\assets\logo.png" alt=""
+                                            <img src="C:\Users\User\Desktop\Работа\nimblesites\assets\logo1.png" alt=""
                                                 width="64" height="64" class="w-16">
                                         </span>
                                         <span class="text-[#f9d1f9]">NimbleSites</span>
@@ -251,6 +249,9 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import { onClickOutside } from '@vueuse/core';
+
 const isMenuOpen = ref(false);
 const menuRef = ref(null);
 
@@ -287,5 +288,41 @@ onMounted(() => {
     }
 });
 
-import { onClickOutside } from '@vueuse/core';
+
+// Закрытие при нажатии ESC
+onMounted(() => {
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') closeMenu()
+    }
+    document.addEventListener('keydown', handleEscape)
+    onBeforeUnmount(() => {
+        document.removeEventListener('keydown', handleEscape)
+    })
+})
+
 </script>
+
+<style>
+/* Анимация меню */
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+/* Анимация затемнения */
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.3s;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+</style>
