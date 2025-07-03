@@ -3,5 +3,11 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@vueuse/nuxt',],
+  app: {
+    layoutTransition: {
+      name:
+        'layout', mode: 'out-in'
+    }
+  }
 
 });
