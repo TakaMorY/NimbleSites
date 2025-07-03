@@ -158,10 +158,10 @@
                             <div>
                                 <NuxtLink to="/">
                                     <div class="flex items-center space-x-2 text-2xl font-medium">
-                                        <span>
+                                        <!-- <span>
                                             <img src="C:\Users\User\Desktop\Работа\nimblesites\assets\logo1.png" alt=""
                                                 width="64" height="64" class="w-16">
-                                        </span>
+                                        </span> -->
                                         <span class="text-[#f9d1f9]">NimbleSites</span>
                                     </div>
                                 </NuxtLink>
