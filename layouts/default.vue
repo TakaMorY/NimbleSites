@@ -27,8 +27,8 @@
                                 </div>
                             </div>
                         </div>
-                        <MobileMenu class="lg:hidden" />
 
+                        <MobileMenu class="lg:hidden" />
 
 
                     </div>
@@ -203,6 +203,8 @@
 </template>
 
 <script setup>
+import MobileMenu from '~/components/MobileMenu.vue';
+
 
 
 onMounted(() => {
