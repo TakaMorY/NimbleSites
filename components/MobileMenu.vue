@@ -103,12 +103,4 @@ onBeforeUnmount(() => {
 .menu-leave-to .absolute.right-0 {
     transform: translateX(100%);
 }
-
-
-html,
-body {
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
-}
 </style>
