@@ -14,7 +14,7 @@ export default defineNuxtConfig({
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
-          content: 'NimbleSites - создание современных сайтов на подписке. Повысьте эффективность вашего бизнеса с нашими решениями.'
+          content: 'NimbleSites - создание современных сайтов. Повысьте эффективность вашего бизнеса с нашими решениями.'
         },
         // Open Graph (для соцсетей и улучшенного отображения в поисковиках)
         { property: 'og:title', content: 'NimbleSites - Профессиональные веб-решения' },
