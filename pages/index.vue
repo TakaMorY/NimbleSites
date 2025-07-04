@@ -46,16 +46,37 @@ definePageMeta({
 </script>
 
 <style>
-.wave-bg {
+[id] {
+    scroll-margin-top: 100px;
+
+}
+
+/* .wave-bg {
     position: absolute;
     bottom: 0;
-    left: -50%;
-    width: 200%;
+    left: 0;
+    
+    width: 100%;
+    
     height: 30vh;
     background: linear-gradient(90deg, #7216f410 0%, #9b51e015 50%, #7216f410 100%);
     border-radius: 50% 50% 0 0;
     animation: wave 15s linear infinite;
 }
+
+@keyframes wave {
+    0% {
+        transform: translateX(-100%) rotate(0deg);
+        
+    }
+
+    100% {
+        transform: translateX(100%) rotate(360deg);
+        
+    }
+}
+
+
 
 .wave-bg.delay-1 {
     animation-delay: 5s;
@@ -67,17 +88,7 @@ definePageMeta({
     animation-delay: 8s;
     bottom: -10vh;
     opacity: 0.2;
-}
-
-@keyframes wave {
-    0% {
-        transform: translateX(0) rotate(0deg);
-    }
-
-    100% {
-        transform: translateX(50%) rotate(360deg);
-    }
-}
+} */
 
 
 
@@ -96,7 +107,15 @@ definePageMeta({
         transform: translateY(0);
     }
 }
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
 </style>
+
 
 
 
@@ -104,7 +123,7 @@ definePageMeta({
 <template>
 
 
-    <div class="">
+    <div class="w-screen overflow-x-hidden">
         <main>
             <section class="mt-20 mb-20" id="cardstovar">
                 <div class="container mx-auto px-4 py-12">
@@ -257,11 +276,11 @@ definePageMeta({
                     </div>
                 </div>
             </section>
+            <!-- px-6 py-10  md:py-20 md:px-10 -->
 
+            <section class="mt-20  py-10 md:py-20   bg-[#7216f4]">
 
-            <section class="mt-20 overflow-x:hidden relative block px-6 py-10 md:py-20 md:px-10 bg-[#7216f4]">
-
-                <div id="features">
+                <div id="features" class="scroll-mt-20">
                     <div class="relative mx-auto max-w-5xl text-center">
                         <span
                             class="text-[#f9d1f9] my-3 flex items-center justify-center font-medium uppercase tracking-wider">
@@ -355,54 +374,56 @@ definePageMeta({
 
 
                     </div>
-                </div>
-                <div id="whyus" class="container mx-auto px-4">
-                    <div class="mb-20 mt-60">
-                        <!-- Heading -->
-                        <h2 class="text-[#f9d1f9] text-lg mb-2">
-                            <!-- data-aos="fade-down -->
-                            Немного о нас
-                        </h2>
-                        <h3 class="mb-4 text-3xl font-bold text-white">
-                            Создаём сайты, которые трудно забыть
-                        </h3>
-                        <p class="mb-8 max-w-3xl text-[#f9d1f9]">
-                            Обладая более чем двулетним опытом в web-разработке, мы овладели искусством
-                            рассказывать истории с помощью наших сайтов. Наша страсть заключается в том, чтобы
-                            создавать сайты и превращать их в вечные воспоминания.
-                        </p>
+                    <div id="whyus" class="container px-2 mx-auto scroll-mt-28">
+                        <div class="mb-20 mt-60">
 
-                        <!-- About Cards Section -->
-                        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                            <!-- Card 1 -->
-                            <div class="rounded-lg bg-white p-6 text-center">
-                                <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">2+</h4>
-                                <p class="text-gray-600">Года на рынке</p>
-                            </div>
-                            <div class="rounded-lg  bg-white p-6 text-center">
-                                <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">Множество</h4>
-                                <p class="text-gray-600">Довольных клиентов</p>
-                            </div>
-                            <div class="rounded-lg bg-white p-6 text-center">
-                                <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">4.7</h4>
-                                <p class="text-gray-600">Средняя оценка</p>
-                            </div>
-                            <div class="rounded-lg bg-white p-6 text-center">
-                                <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">10+</h4>
-                                <p class="text-gray-600">Шаблонов сайтов</p>
-                            </div>
+                            <h2 class="text-[#f9d1f9] text-lg mb-2">
 
+                                Немного о нас
+                            </h2>
+                            <h3 class="mb-4 text-3xl font-bold text-white">
+                                Создаём сайты, которые трудно забыть
+                            </h3>
+                            <p class="mb-8 max-w-3xl text-[#f9d1f9]">
+                                Обладая более чем двулетним опытом в web-разработке, мы овладели искусством
+                                рассказывать истории с помощью наших сайтов. Наша страсть заключается в том, чтобы
+                                создавать сайты и превращать их в вечные воспоминания.
+                            </p>
+
+
+                            <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+
+                                <div class="rounded-lg bg-white p-6 text-center">
+                                    <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">2+</h4>
+                                    <p class="text-gray-600">Года на рынке</p>
+                                </div>
+                                <div class="rounded-lg  bg-white p-6 text-center">
+                                    <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">Множество</h4>
+                                    <p class="text-gray-600">Довольных клиентов</p>
+                                </div>
+                                <div class="rounded-lg bg-white p-6 text-center">
+                                    <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">4.7</h4>
+                                    <p class="text-gray-600">Средняя оценка</p>
+                                </div>
+                                <div class="rounded-lg bg-white p-6 text-center">
+                                    <h4 class="mb-2 text-3xl font-bold text-[#7216f4]">10+</h4>
+                                    <p class="text-gray-600">Шаблонов сайтов</p>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="items-center gap-4 mt-8">
+                            <NuxtLink to="https://t.me/TakaMorY"
+                                class="cursor-pointer rounded-full border-2 py-3 px-8 border-white text-white hover:bg-white hover:text-purple-900 transition duration-300 ease-in-out">
+                                Связаться с нами
+                            </NuxtLink>
                         </div>
                     </div>
-
-                    <!-- Buttons Section -->
-                    <div class="items-center gap-4 mt-8">
-                        <NuxtLink to="https://t.me/TakaMorY"
-                            class="cursor-pointer rounded-full border-2 py-3 px-8 border-white text-white hover:bg-white hover:text-purple-900 transition duration-300 ease-in-out">
-                            Связаться с нами
-                        </NuxtLink>
-                    </div>
                 </div>
+
+
 
 
 
@@ -410,14 +431,14 @@ definePageMeta({
 
 
 
-            <section ref="section" class="relative py-10 sm:py-10 lg:py-24">
+            <section ref="section" class="mb-20 py-10 sm:py-10 lg:py-24">
                 <div class="absolute inset-0 -z-10 overflow-hidden">
                     <div class="wave-bg"></div>
                     <div class="wave-bg delay-1"></div>
                     <div class="wave-bg delay-2"></div>
                 </div>
 
-                <div class="relative z-10 container mx-auto px-4">
+                <div class="relative z-10 container mx-auto  px-4">
                     <h2 class="text-3xl font-bold text-center mb-12 text-gray-800">Как мы работаем?</h2>
                     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                         <div class="relative mt-12 lg:mt-20">

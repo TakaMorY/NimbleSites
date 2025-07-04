@@ -3,11 +3,13 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@vueuse/nuxt',],
+  css: [
+    '/assets/css/global.css'
+  ],
 
-  router: {
-    options: {
-      scrollBehaviorType: 'smooth',
-    },
-  },
+
+
+
+
 
 });

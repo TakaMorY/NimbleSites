@@ -7,18 +7,14 @@
 </template> -->
 <template>
 
-
-
   <NuxtLayout>
 
-
-    <NuxtPage :key="$route.fullPath" style="margin: 0; padding: 0; width: 100% " />
-
+    <NuxtPage />
+    <div>
+      <ScrollToTop />
+    </div>
 
   </NuxtLayout>
-  <div>
-    <ScrollToTop />
-  </div>
 
 </template>
 <script setup>
@@ -28,3 +24,12 @@ useHead({
   }
 })
 </script>
+
+<style scoped>
+/* Убедитесь, что эти стили присутствуют */
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+</style>

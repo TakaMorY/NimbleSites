@@ -1,15 +1,18 @@
 <template>
-    <div class=" min-h-screen">
-        <div class="absolute -top-20 -right-20 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-float-slow"></div>
-        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-float-delay">
+    <div class="flex flex-col min-h-screen">
+        <div
+            class="absolute -top-20 -right-20 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-float-slow overflow-hidden">
+        </div>
+        <div
+            class="absolute -bottom-20 -left-20 w-64 h-64 bg-blue-100 rounded-full opacity-20 animate-float-delay overflow-hidden">
         </div>
 
 
 
-        <!-- Градиентный фон -->
-        <div class="fixed inset-0 bg-gradient-to-br from-white via-blue-50 to-purple-50 -z-10"></div>
+        <div class="fixed inset-0 bg-gradient-to-br from-white via-blue-50 to-purple-50 -z-10 w-screen"></div>
+
         <div>
-            <header class="bg-[#7216f4]">
+            <header class="bg-[#7216f4] w-full overflow-hidden top-0 w-full">
                 <div class="top-0 py-1 lg:py-2 w-full bg-transparent lg:relative z-50 h-auto  overflow-x-hidden">
                     <nav class="z-10 sticky top-0 left-0 right-0 max-w-4xl xl:max-w-5xl mx-auto px-5 py-2.5 lg:py-4">
                         <div class="flex items-center justify-between ">
@@ -97,7 +100,7 @@
                     <div class="flex-1 pl-12">
                         <div class="pb-10  md:p-10 lg:p-0 sm:pb-0">
                             <img id="heroImg1"
-                                class="w-full max-w-md mx-auto md:max-w-lg lg:max-w-xl transition-all duration-1000 ease-in-out hover:scale-105"
+                                class="w-full max-w-md mx-auto md:max-w-lg lg:max-w-xl transition-all duration-1000 ease-in-out hover:scale-105 overflow-hidden"
                                 :class="visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'"
                                 src="https://bootstrapmade.com/demo/templates/FlexStart/assets/img/hero-img.png"
                                 alt="Awesome hero page image" width="500" height="488" />
@@ -110,10 +113,10 @@
             </header>
         </div>
         <main class="flex-grow">
-            <NuxtPage :key="$route.fullPath" />
+            <slot /> <!-- Сюда будет вставляться содержимое страниц -->
         </main>
         <div>
-            <footer class="bg-[#7216f4]">
+            <footer class="bg-[#7216f4] w-full overflow-hidden mt-auto">
                 <div class="container mx-auto p-0 md:p-8 xl:px-0">
                     <div class="mx-auto max-w-7xl px-6 pb-10 pt-16">
                         <div class="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -219,7 +222,7 @@
 <script setup>
 
 
-import { NuxtPage } from '#components';
+
 import MobileMenu from '~/components/MobileMenu.vue';
 
 
@@ -259,23 +262,14 @@ onMounted(() => {
 </script>
 
 <style>
-.menu-enter-active,
-.menu-leave-active {
-    transition: opacity 0.3s;
+
+
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
-.menu-enter-from,
-.menu-leave-to {
-    opacity: 0;
-}
 
-.menu-enter-active .absolute.right-0,
-.menu-leave-active .absolute.right-0 {
-    transition: transform 0.3s ease;
-}
-
-.menu-enter-from .absolute.right-0,
-.menu-leave-to .absolute.right-0 {
-    transform: translateX(100%);
-}
 </style>
