@@ -6,7 +6,7 @@
             <div class="bg-gradient-to-br from-gray-900 to-gray-800">
 
 
-                <div class=" top-0 py-1 lg:py-2 w-full bg-transparent lg:relative z-50 h-auto overflow-x-hidden">
+                <div class="top-0 py-1 lg:py-2 w-full bg-transparent lg:relative z-50 h-auto overflow-x-hidden">
                     <nav class="z-10 sticky top-0 left-0 right-0 max-w-4xl xl:max-w-5xl mx-auto px-5 py-2.5 lg:py-4">
                         <div class="flex items-center justify-between ">
                             <div class="flex items-center space-x-">
@@ -15,20 +15,24 @@
                             <div class="hidden lg:block ">
                                 <div class="flex space-x-10 text-base font-bold text-black/60 ">
                                     <div
-                                        class=" hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
+                                        class="p-2 hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
                                         <NuxtLink to="#cardstovar">Услуги</NuxtLink>
                                     </div>
                                     <div
-                                        class=" hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
+                                        class="p-2 hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
                                         <NuxtLink to="#whyus">О нас</NuxtLink>
                                     </div>
                                     <div
-                                        class=" hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
+                                        class="p-2 hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
                                         <NuxtLink to="https://t.me/TakaMorY">Портфолио</NuxtLink>
                                     </div>
                                     <div
-                                        class=" hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
+                                        class="p-2 hover:text-white text-gray-400  hover:w-fit transition-all duration-100 ease-linear">
                                         <NuxtLink to="/shablons">Шаблоны</NuxtLink>
+                                    </div>
+                                    <div
+                                        class="p-2 text-white bg-[#7216f4] hover:w-fit rounded-xl hover:scale-105 transition-all duration-100 ease-linear">
+                                        <NuxtLink to="/shablons">Расчитать стоимость</NuxtLink>
                                     </div>
 
                                 </div>
