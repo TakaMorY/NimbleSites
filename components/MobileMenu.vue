@@ -33,9 +33,8 @@
                         <div
                             class="absolute top-0 left-0 w-32 h-32 bg-purple-700 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-40">
                         </div>
-                        <div class="absolute bottom-0 left-68 w-24 h-24 bg-purple-700 rounded-full opacity-40">
-                        </div>
 
+                        <!-- <div class="absolute bottom-12 left-48 w-24 h-24 bg-purple-700 rounded-full opacity-40"></div> -->
                         <!-- Заголовок меню -->
                         <div
                             class="p-5 flex items-center justify-between border-b border-purple-700 border-opacity-30 relative z-10">
@@ -127,13 +126,13 @@
                                                 d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.140.141-.259.259-.374.261l.213-3.053 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.136-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
                                         </svg>
                                     </a>
-                                    <a href="#"
+                                    <!-- <a href="#"
                                         class="w-8 h-8 flex items-center justify-center rounded-lg bg-purple-800 bg-opacity-40 hover:bg-opacity-60 transition-colors duration-300">
                                         <svg class="w-4 h-4 text-purple-200" fill="currentColor" viewBox="0 0 24 24">
                                             <path
                                                 d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm4.441 16.892c-2.102.144-6.784.144-8.883 0-2.276-.156-2.541-1.27-2.558-4.892.017-3.629.285-4.736 2.558-4.892 2.099-.144 6.782-.144 8.883 0 2.277.156 2.541 1.27 2.559 4.892-.018 3.629-.285 4.736-2.559 4.892zm-6.441-7.234l4.917 2.338-4.917 2.346v-4.684z" />
                                         </svg>
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </nav>
