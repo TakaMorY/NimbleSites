@@ -20,8 +20,8 @@ export default defineNuxtConfig({
         { property: 'og:title', content: 'NimbleSites - Профессиональные веб-решения' },
         { property: 'og:description', content: 'Создаем современные сайты для бизнеса без больших затрат.' },
         { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://ваш-сайт.com' },
-        { property: 'og:image', content: 'https://ваш-сайт.com/og-image.jpg' }, // Добавьте превью для соцсетей
+        { property: 'og:url', content: 'https://nimble-sites.vercel.app' },
+        { property: 'og:image', content: 'https://nimble-sites.vercel.app/og-image.jpg' }, // Добавьте превью для соцсетей
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, // Favicon
