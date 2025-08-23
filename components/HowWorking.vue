@@ -73,10 +73,10 @@
 
             <!-- Кнопка призыва к действию -->
             <div class="text-center mt-16">
-                <button
+                <NuxtLink to="https://t.me/TakaMorY"
                     class="bg-purple-800 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-colors duration-300 transform hover:scale-105 shadow-lg shadow-purple-800/30">
                     Обсудить проект
-                </button>
+                </NuxtLink>
             </div>
         </div>
     </section>

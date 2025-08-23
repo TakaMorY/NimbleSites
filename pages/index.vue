@@ -141,7 +141,7 @@ definePageMeta({
                         <img id="heroImg1"
                             class="w-full max-w-md mx-auto md:max-w-lg lg:max-w-xl transition-all duration-1000 ease-in-out hover:scale-105"
                             :class="visible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'"
-                            src="https://bootstrapmade.com/demo/templates/FlexStart/assets/img/hero-img.png"
+                            src="\images\logo\logo.png"
                             alt="Awesome hero page image" width="500" height="488" />
                     </div>
                 </div>

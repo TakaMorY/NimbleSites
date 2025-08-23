@@ -33,7 +33,8 @@
                         <div
                             class="absolute top-0 left-0 w-32 h-32 bg-purple-700 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-40">
                         </div>
-                        <div class="absolute bottom-10 right-10 w-24 h-24 bg-purple-700 rounded-full opacity-40"></div>
+                        <div class="absolute bottom-0 left-68 w-24 h-24 bg-purple-700 rounded-full opacity-40">
+                        </div>
 
                         <!-- Заголовок меню -->
                         <div
@@ -116,10 +117,6 @@
                             <div class="mt-16 text-center relative">
                                 <div
                                     class="absolute -top-10 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-purple-600 to-transparent">
-                                </div>
-
-                                <div class="inline-block p-3 rounded-xl bg-purple-800 bg-opacity-40 ">
-
                                 </div>
                                 <p class="mt-4 text-sm text-purple-300 text-opacity-80">Мы всегда на связи!</p>
                                 <div class="flex justify-center space-x-3 mt-3">
