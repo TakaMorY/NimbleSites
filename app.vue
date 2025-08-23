@@ -13,6 +13,9 @@
     <div>
       <ScrollToTop />
     </div>
+    <div>
+      <TelegramButton />
+    </div>
 
   </NuxtLayout>
 
@@ -25,11 +28,4 @@ useHead({
 })
 </script>
 
-<style scoped>
-/* Убедитесь, что эти стили присутствуют */
-html,
-body {
-  width: 100%;
-  overflow-x: hidden;
-}
-</style>
+<style scoped></style>

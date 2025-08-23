@@ -2,31 +2,59 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@vueuse/nuxt',],
-  css: [
-    '/assets/css/global.css'
-  ],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'pinia-plugin-persistedstate/nuxt', '@vueuse/nuxt', 'nuxt-icon'],
   app: {
     head: {
-      title: 'NimbleSites - Профессиональные веб-решения', // Заголовок сайта
+      title: 'NimbleSites - Профессиональные веб-решения',
       meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
           content: 'NimbleSites - создание современных сайтов. Повысьте эффективность вашего бизнеса с нашими решениями.'
         },
-        // Open Graph (для соцсетей и улучшенного отображения в поисковиках)
-        { property: 'og:title', content: 'NimbleSites - Профессиональные веб-решения' },
-        { property: 'og:description', content: 'Создаем современные сайты для бизнеса без больших затрат.' },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://nimble-sites.vercel.app' },
-        { property: 'og:image', content: 'https://nimble-sites.vercel.app/og-image.jpg' }, // Добавьте превью для соцсетей
+        {
+          charset: 'utf-8'
+        },
+        {
+          name: 'viewport', content: 'width=device-width, initial-scale=1'
+        },
+        {
+          name: 'keywords',
+          content: 'NimbleSites, разработка сайтов, Nimble site, Nimble, nimble, nimblesites, nimblesite, nimble sites, нимбле сайт, нимбле сайтс, ТшьидуЫшеуы'
+        },
+        {
+          property: 'og:title',
+          content: 'NimbleSites - Профессиональные веб-решения'
+        },
+        {
+          property: 'og:description',
+          content: 'NimbleSites - создание современных сайтов. Повысьте эффективность вашего бизнеса с нашими решениями.'
+        },
+        {
+          property: 'og:image',
+          content: 'https://nimble-sites.vercel.app/og/og-image.jpg'
+        },
+        {
+          property: 'og:url',
+          content: 'https://nimble-sites.vercel.app/'
+        }
       ],
       link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }, // Favicon
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }, // Для мобильных устройств
-      ],
+        {
+          rel: 'canonical',
+          href: 'https://nimble-sites.vercel.app/'
+        },
+        {
+          rel: 'icon',
+          type: 'image/x-icon',
+          href: '/favicon.ico'
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '32x32',
+          href: '/icon-32x32.png'
+        }
+      ]
     }
   }
 

@@ -146,9 +146,7 @@ definePageMeta({
                     </div>
                 </div>
             </div>
-            <div>
-                <TelegramButton />
-            </div>
+            
         </section>
         <section class="pt-12 bg-gray-900" id="cardstovar">
             <CardsTovar />
