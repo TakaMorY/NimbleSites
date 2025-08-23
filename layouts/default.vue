@@ -3,9 +3,6 @@
 
         <div class="bg-gradient-to-br from-gray-900 to-gray-800">
             <header>
-
-
-
                 <div class="top-0 py-1 lg:py-2 w-full bg-transparent lg:relative z-50 h-auto overflow-x-hidden">
                     <nav class="z-10 sticky top-0 left-0 right-0 max-w-4xl xl:max-w-5xl mx-auto px-5 py-2.5 lg:py-4">
                         <div class="flex items-center justify-between ">
