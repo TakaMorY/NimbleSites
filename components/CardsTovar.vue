@@ -290,7 +290,7 @@
                     class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden text-white h-full flex flex-col border border-gray-700/50">
                     <div class="relative h-52 overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20">
-                            <div
+                            <img src="\images\tovars\soc.jpg" alt="social"
                                 class="w-full h-full bg-gradient-to-br from-[#7216f4]/30 to-[#9a54f9]/30 flex items-center justify-center">
                                 <div class="text-center">
                                     <svg class="w-16 h-16 text-white/20 mx-auto mb-2" fill="currentColor"
@@ -301,7 +301,7 @@
                                     </svg>
                                     <span class="text-white/40 text-sm">Соцсети пример</span>
                                 </div>
-                            </div>
+                            </img>
                         </div>
                         <div
                             class="absolute top-4 left-4 bg-[#7216f4] text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm">
@@ -384,7 +384,7 @@
                     class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden text-white h-full flex flex-col border border-gray-700/50">
                     <div class="relative h-52 overflow-hidden">
                         <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20">
-                            <div
+                            <img src="\images\tovars\shablon.jpg" alt="shablons"
                                 class="w-full h-full bg-gradient-to-br from-[#7216f4]/30 to-[#9a54f9]/30 flex items-center justify-center">
                                 <div class="text-center">
                                     <svg class="w-16 h-16 text-white/20 mx-auto mb-2" fill="currentColor"
@@ -395,7 +395,7 @@
                                     </svg>
                                     <span class="text-white/40 text-sm">Фото пример</span>
                                 </div>
-                            </div>
+                            </img>
                         </div>
                         <div
                             class="absolute top-4 left-4 bg-[#7216f4] text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm">

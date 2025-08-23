@@ -162,7 +162,7 @@ definePageMeta({
         </section>
 
         <section>
-            
+            <HowWorking />
         </section>
     </main>
 
