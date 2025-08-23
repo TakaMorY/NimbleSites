@@ -45,7 +45,7 @@
 
 
 
-            
+
         </div>
 
 
@@ -57,7 +57,7 @@
             <slot />
         </main>
 
-        <footer class="bg-[#7216f4]">
+        <footer class="bg-gradient-to-b from-gray-900 to-purple-900">
             <div class="container mx-auto p-0 md:p-8 xl:px-0">
                 <div class="mx-auto max-w-7xl px-6 pb-10 pt-16">
                     <div class="xl:grid xl:grid-cols-3 xl:gap-8">
@@ -65,19 +65,20 @@
                         <div class="space-y-4">
                             <div>
                                 <NuxtLink to="/">
-                                    <div class="flex items-center space-x-2 text-2xl font-medium">
-                                        <!-- <span>
-                                            <img src=""
-                                                alt="" width="64" height="64" class="w-16">
-                                        </span> -->
-                                        <span class="text-[#f9d1f9]">NimbleSites</span>
+                                    <div class="flex items-center space-x-3">
+                                        <!-- Место для логотипа -->
+                                        <div
+                                            class="w-12 h-12  rounded-lg flex items-center justify-center shadow-lg">
+                                            <img src="\images\logo\logo.png" class="text-white font-bold text-lg"></img>
+                                        </div>
+                                        <span
+                                            class="text-transparent bg-clip-text bg-gradient-to-r from-purple-200 to-purple-400 text-2xl font-medium">NimbleSites</span>
                                     </div>
                                 </NuxtLink>
                             </div>
-                            <div class="max-w-md pr-16 text-md text-[#c8c8c8]">
+                            <div class="max-w-md pr-16 text-md text-purple-200">
                                 Повысьте производительность и эффективность вашего бизнеса с помощью передовых
-                                решений в
-                                веб-разработке.
+                                решений в веб-разработке.
                             </div>
                         </div>
 
@@ -85,17 +86,17 @@
                         <div class="mt-16 grid grid-cols-3 gap-8 xl:col-span-2 xl:mt-0">
                             <!-- Колонка 1: Ресурсы -->
                             <div>
-                                <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Ресурсы</h3>
+                                <h3 class="text-md font-semibold leading-6 text-purple-100">Ресурсы</h3>
                                 <ul role="list" class="mt-4 space-y-4">
                                     <li>
                                         <NuxtLink to=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                            class="text-md leading-6 hover:text-white text-gray-400 transition-colors duration-300">
                                             Шаблоны работ
                                         </NuxtLink>
                                     </li>
                                     <li>
                                         <NuxtLink to=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                            class="text-md leading-6 hover:text-white text-gray-400 transition-colors duration-300">
                                             Наши работы
                                         </NuxtLink>
                                     </li>
@@ -104,17 +105,17 @@
 
                             <!-- Колонка 2: Компания -->
                             <div>
-                                <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Компания</h3>
+                                <h3 class="text-md font-semibold leading-6 text-purple-100">Компания</h3>
                                 <ul role="list" class="mt-4 space-y-4">
                                     <li>
                                         <NuxtLink to="#whyus"
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                            class="text-md leading-6 hover:text-white text-gray-400 transition-colors duration-300">
                                             О нас
                                         </NuxtLink>
                                     </li>
                                     <li>
                                         <NuxtLink to="https://t.me/TakaMorY"
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                            class="text-md leading-6 hover:text-white text-gray-400 transition-colors duration-300">
                                             Связаться с нами
                                         </NuxtLink>
                                     </li>
@@ -123,17 +124,17 @@
 
                             <!-- Колонка 3: Пользователю -->
                             <div>
-                                <h3 class="text-md font-semibold leading-6 text-[#fbfbfb]">Пользователю</h3>
+                                <h3 class="text-md font-semibold leading-6 text-purple-100">Пользователю</h3>
                                 <ul role="list" class="mt-4 space-y-4">
                                     <li>
                                         <NuxtLink to=""
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                            class="text-md leading-6 hover:text-white text-gray-400 transition-colors duration-300">
                                             Отзывы
                                         </NuxtLink>
                                     </li>
                                     <li>
                                         <NuxtLink to="#features"
-                                            class="text-md leading-6 text-[#e2e2e2] hover:underline hover:underline-offset-4 transition-colors duration-300 hover:text-[#c8c8c8]">
+                                            class="text-md leading-6 hover:text-white text-gray-400 transition-colors duration-300">
                                             Почему именно мы
                                         </NuxtLink>
                                     </li>
@@ -143,11 +144,11 @@
                     </div>
 
                     <!-- Футер -->
-                    <div class="mt-16 border-t border-gray-400/30 pt-8 sm:mt-20 lg:mt-24">
-                        <div class="text-md text-center text-white">
+                    <div class="mt-16 border-t border-purple-700/30 pt-8 sm:mt-20 lg:mt-24">
+                        <div class="text-md text-center text-purple-200">
                             Все права защищены © 2025. Создано
-                            <span class="text-[#c8c8c8]">♥</span>
-                            <NuxtLink to="/" class="hover:text-[#f9d1f9] transition-colors">NimbleSites</NuxtLink>.
+                            <span class="text-purple-300">♥</span>
+                            <NuxtLink to="/" class="hover:text-purple-100 transition-colors">NimbleSites</NuxtLink>.
                         </div>
                     </div>
                 </div>

@@ -161,7 +161,7 @@ definePageMeta({
             <WhyUs />
         </section>
 
-        <section>
+        <section class=" bg-gray-900">
             <HowWorking />
         </section>
     </main>

@@ -1,6 +1,6 @@
 <template>
     <NuxtLink to="https://t.me/TakaMorY"
-        class="fixed bottom-6 left-6 bg-gray-700 hover:bg-gray-800 text-white py-2 px-3 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 z-50 group flex items-center space-x-2 md:flex hidden"
+        class="fixed bottom-4 left-4 bg-gray-700 hover:bg-gray-800 text-white py-2 px-3 rounded-xl shadow-lg transition-all duration-300 transform hover:scale-105 z-50 group flex items-center space-x-2 md:flex hidden"
         aria-label="Написать в Telegram">
         <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
             <path
