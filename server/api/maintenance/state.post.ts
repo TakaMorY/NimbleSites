@@ -5,7 +5,8 @@ export default defineEventHandler(async (event) => {
 
     const state = {
         enabled: body.enabled,
-        enabledAt: body.enabled ? Date.now() : null
+        enabledAt: body.enabled ? Date.now() : null,
+        message: body.message || 'Сайт на техническом обслуживании'
     }
 
     await storage.setItem('state', state)

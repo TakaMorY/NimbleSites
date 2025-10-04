@@ -1,53 +1,57 @@
 // composables/useMaintenance.ts
 export const useMaintenance = () => {
-    const maintenanceState = useState('maintenanceState', () => ({
+    const state = useState('maintenance', () => ({
         enabled: false,
-        enabledAt: null as number | null
+        enabledAt: null as number | null,
+        message: ''
     }))
 
     // Загружаем состояние с сервера
-    const loadState = async () => {
+    const load = async (): Promise<boolean> => {
         try {
-            const state = await $fetch('/api/maintenance/state')
-            maintenanceState.value = state
+            const newState = await $fetch('/api/maintenance/state')
+            state.value = newState
+            return true
         } catch (error) {
             console.error('Failed to load maintenance state:', error)
+            return false
         }
     }
 
     // Включаем техобслуживание
-    const enable = async () => {
+    const enable = async (message?: string): Promise<boolean> => {
         try {
-            const state = await $fetch('/api/maintenance/state', {
+            const newState = await $fetch('/api/maintenance/state', {
                 method: 'POST',
-                body: { enabled: true }
+                body: { enabled: true, message }
             })
-            maintenanceState.value = state
+            state.value = newState
+            return true
         } catch (error) {
             console.error('Failed to enable maintenance:', error)
+            return false
         }
     }
 
     // Выключаем техобслуживание
-    const disable = async () => {
+    const disable = async (): Promise<boolean> => {
         try {
-            const state = await $fetch('/api/maintenance/state', {
+            const newState = await $fetch('/api/maintenance/state', {
                 method: 'POST',
                 body: { enabled: false }
             })
-            maintenanceState.value = state
+            state.value = newState
+            return true
         } catch (error) {
             console.error('Failed to disable maintenance:', error)
+            return false
         }
     }
 
-    const isMaintenanceEnabled = computed(() => maintenanceState.value.enabled)
-
     return {
-        maintenanceState: readonly(maintenanceState),
-        loadState,
+        state: readonly(state),
+        load,
         enable,
-        disable,
-        isMaintenanceEnabled
+        disable
     }
 }

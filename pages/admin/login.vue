@@ -52,7 +52,6 @@
                 <div class="mt-4 p-3 bg-gray-800/50 rounded-lg">
                     <p class="text-gray-400 text-sm">Для тестирования используйте пароль: <code
                             class="text-purple-300">admin123</code></p>
-                    <p class="text-gray-400 text-sm mt-1">Сессия сохраняется на 7 дней</p>
                 </div>
             </div>
         </div>
@@ -83,7 +82,6 @@ const handleLogin = async () => {
         const success = login(password.value)
 
         if (success) {
-            console.log('Login successful')
             await navigateTo('/admin')
         } else {
             error.value = 'Неверный пароль'
@@ -96,7 +94,7 @@ const handleLogin = async () => {
     }
 }
 
-// Если уже залогинен, перенаправляем в админ-панель
+// Если уже залогинен, перенаправляем
 onMounted(() => {
     if (isAdmin.value) {
         navigateTo('/admin')

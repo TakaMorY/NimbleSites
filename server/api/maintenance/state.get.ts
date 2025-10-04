@@ -3,5 +3,5 @@ export default defineEventHandler(async () => {
     const storage = useStorage('maintenance')
     const state = await storage.getItem('state')
 
-    return state || { enabled: false, enabledAt: null }
+    return state || { enabled: false, enabledAt: null, message: 'Сайт на техническом обслуживании' }
 })
