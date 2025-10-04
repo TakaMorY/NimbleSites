@@ -1,21 +1,14 @@
 // plugins/maintenance.client.ts
-export default defineNuxtPlugin(async () => {
+export default defineNuxtPlugin(() => {
     if (!process.client) return
 
-    const { state, loadState } = useMaintenance()
+    const { loadState } = useMaintenance()
 
     // Загружаем начальное состояние
-    await loadState()
+    loadState()
 
-    // Обновляем состояние каждые 2 секунды
-    const interval = setInterval(async () => {
-        await loadState()
-    }, 2000)
-
-    // Очищаем интервал при уничтожении плагина
-    return {
-        provide: {
-            maintenanceCleanup: () => clearInterval(interval)
-        }
-    }
+    // Обновляем каждые 3 секунды
+    setInterval(() => {
+        loadState()
+    }, 3000)
 })

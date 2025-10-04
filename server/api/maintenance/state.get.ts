@@ -3,7 +3,6 @@ export default defineEventHandler(async () => {
     try {
         const storage = useStorage('maintenance')
         const state = await storage.getItem('state')
-        console.log('GET Maintenance state:', state)
 
         return state || {
             enabled: false,

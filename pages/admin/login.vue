@@ -94,7 +94,6 @@ const handleLogin = async () => {
     }
 }
 
-// Если уже залогинен, перенаправляем
 onMounted(() => {
     if (isAdmin.value) {
         navigateTo('/admin')

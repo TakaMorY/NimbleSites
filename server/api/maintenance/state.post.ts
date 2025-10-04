@@ -2,8 +2,6 @@
 export default defineEventHandler(async (event) => {
     try {
         const body = await readBody(event)
-        console.log('POST Maintenance state:', body)
-
         const storage = useStorage('maintenance')
 
         const state = {
@@ -13,7 +11,6 @@ export default defineEventHandler(async (event) => {
         }
 
         await storage.setItem('state', state)
-        console.log('Saved maintenance state:', state)
 
         return state
     } catch (error) {
