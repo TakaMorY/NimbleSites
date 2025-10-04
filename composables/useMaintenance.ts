@@ -7,10 +7,12 @@ export const useMaintenance = () => {
     }))
 
     // Загружаем состояние с сервера
-    const load = async (): Promise<boolean> => {
+    const loadState = async (): Promise<boolean> => {
         try {
+            console.log('Loading maintenance state...')
             const newState = await $fetch('/api/maintenance/state')
             state.value = newState
+            console.log('Maintenance state loaded:', newState)
             return true
         } catch (error) {
             console.error('Failed to load maintenance state:', error)
@@ -19,13 +21,18 @@ export const useMaintenance = () => {
     }
 
     // Включаем техобслуживание
-    const enable = async (message?: string): Promise<boolean> => {
+    const enableMaintenance = async (message?: string): Promise<boolean> => {
         try {
+            console.log('Enabling maintenance...')
             const newState = await $fetch('/api/maintenance/state', {
                 method: 'POST',
-                body: { enabled: true, message }
+                body: {
+                    enabled: true,
+                    message: message || 'Сайт на техническом обслуживании'
+                }
             })
             state.value = newState
+            console.log('Maintenance enabled:', newState)
             return true
         } catch (error) {
             console.error('Failed to enable maintenance:', error)
@@ -34,13 +41,15 @@ export const useMaintenance = () => {
     }
 
     // Выключаем техобслуживание
-    const disable = async (): Promise<boolean> => {
+    const disableMaintenance = async (): Promise<boolean> => {
         try {
+            console.log('Disabling maintenance...')
             const newState = await $fetch('/api/maintenance/state', {
                 method: 'POST',
                 body: { enabled: false }
             })
             state.value = newState
+            console.log('Maintenance disabled:', newState)
             return true
         } catch (error) {
             console.error('Failed to disable maintenance:', error)
@@ -50,8 +59,8 @@ export const useMaintenance = () => {
 
     return {
         state: readonly(state),
-        load,
-        enable,
-        disable
+        loadState,
+        enableMaintenance,
+        disableMaintenance
     }
 }

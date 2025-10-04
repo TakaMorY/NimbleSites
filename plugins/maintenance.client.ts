@@ -1,32 +1,21 @@
 // plugins/maintenance.client.ts
 export default defineNuxtPlugin(async () => {
-    const { state, load } = useMaintenance()
+    if (!process.client) return
+
+    const { state, loadState } = useMaintenance()
 
     // Загружаем начальное состояние
-    await load()
+    await loadState()
 
-    // Обновляем состояние каждые 3 секунды
-    if (process.client) {
-        setInterval(async () => {
-            await load()
-        }, 3000)
-    }
+    // Обновляем состояние каждые 2 секунды
+    const interval = setInterval(async () => {
+        await loadState()
+    }, 2000)
 
-    // Следим за изменениями состояния
-    watch(state, (newState) => {
-        if (process.client) {
-            const { isAdmin } = useAuth()
-            const route = useRoute()
-
-            // Если техобслуживание включено, пользователь не админ и не на странице техобслуживания
-            if (newState.enabled && !isAdmin.value && route.path !== '/maintenance') {
-                navigateTo('/maintenance')
-            }
-
-            // Если техобслуживание выключено и пользователь на странице техобслуживания
-            if (!newState.enabled && route.path === '/maintenance') {
-                navigateTo('/')
-            }
+    // Очищаем интервал при уничтожении плагина
+    return {
+        provide: {
+            maintenanceCleanup: () => clearInterval(interval)
         }
-    })
+    }
 })

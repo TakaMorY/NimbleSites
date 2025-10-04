@@ -2,13 +2,14 @@
 export const useAuth = () => {
     const isAdmin = useState('isAdmin', () => false)
 
-    // Проверяем сохраненную сессию
+    // Проверяем сохраненную сессию при инициализации
     if (process.client) {
         const saved = localStorage.getItem('adminSession')
         if (saved) {
             try {
                 const session = JSON.parse(saved)
-                const sessionDuration = 7 * 24 * 60 * 60 * 1000 // 7 дней
+                // Сессия действует 7 дней
+                const sessionDuration = 7 * 24 * 60 * 60 * 1000
                 if (session.loginTime && Date.now() - session.loginTime < sessionDuration) {
                     isAdmin.value = true
                 } else {
@@ -21,6 +22,7 @@ export const useAuth = () => {
     }
 
     const login = (password: string): boolean => {
+        // Простая проверка пароля
         if (password === 'admin123') {
             const session = {
                 isAdmin: true,
@@ -29,6 +31,7 @@ export const useAuth = () => {
 
             isAdmin.value = true
 
+            // Сохраняем в localStorage
             if (process.client) {
                 localStorage.setItem('adminSession', JSON.stringify(session))
             }
@@ -41,6 +44,7 @@ export const useAuth = () => {
     const logout = () => {
         isAdmin.value = false
 
+        // Удаляем из localStorage
         if (process.client) {
             localStorage.removeItem('adminSession')
         }

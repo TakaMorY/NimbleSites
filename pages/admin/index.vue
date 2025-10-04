@@ -23,15 +23,24 @@
                 <!-- Карточка управления техобслуживанием -->
                 <div class="bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-700">
                     <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-lg font-semibold text-white">Глобальное управление техобслуживанием</h2>
-                        <span class="px-3 py-1 rounded-full text-sm font-medium"
-                            :class="state.enabled ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'">
-                            {{ state.enabled ? 'АКТИВЕН' : 'неактивен' }}
-                        </span>
+                        <h2 class="text-lg font-semibold text-white">Управление техобслуживанием</h2>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-3 py-1 rounded-full text-sm font-medium"
+                                :class="state.enabled ? 'bg-red-500/20 text-red-400' : 'bg-green-500/20 text-green-400'">
+                                {{ state.enabled ? 'ВКЛЮЧЕНО' : 'выключено' }}
+                            </span>
+                            <button @click="refreshState" class="p-1 text-gray-400 hover:text-white transition-colors"
+                                title="Обновить состояние">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                                </svg>
+                            </button>
+                        </div>
                     </div>
 
                     <p class="text-gray-400 mb-6">
-                        При включении этого режима ВСЕ пользователи на ВСЕХ устройствах будут автоматически
+                        При включении этого режима все пользователи на всех устройствах будут автоматически
                         перенаправлены на страницу технического обслуживания.
                     </p>
 
@@ -53,6 +62,12 @@
                             </svg>
                             {{ loading ? 'Отключение...' : 'Отключить техработы' }}
                         </button>
+                    </div>
+
+                    <!-- Статус операции -->
+                    <div v-if="operationStatus" class="mt-4 p-3 rounded-lg"
+                        :class="operationStatus.type === 'success' ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'">
+                        {{ operationStatus.message }}
                     </div>
 
                     <div v-if="state.enabled" class="mt-6 p-4 bg-gray-700/50 rounded-xl">
@@ -90,7 +105,7 @@
                             </div>
                             <div class="flex justify-between">
                                 <span class="text-gray-400">Обновление</span>
-                                <span class="text-blue-400 font-medium">Авто (3 сек)</span>
+                                <span class="text-blue-400 font-medium">Авто (2 сек)</span>
                             </div>
                         </div>
                     </div>
@@ -117,22 +132,37 @@
 
 <script setup lang="ts">
 const { logout } = useAuth()
-const { state, enable, disable, load } = useMaintenance()
+const { state, loadState, enableMaintenance, disableMaintenance } = useMaintenance()
 
 const loading = ref(false)
+const operationStatus = ref<{ type: 'success' | 'error', message: string } | null>(null)
 
 const handleLogout = () => {
     logout()
     navigateTo('/admin/login')
 }
 
+const refreshState = async () => {
+    await loadState()
+    showStatus('success', 'Состояние обновлено')
+}
+
 const enableMaintenance = async () => {
     loading.value = true
+    operationStatus.value = null
+
     try {
-        await enable()
-        console.log('Maintenance enabled globally')
+        const success = await enableMaintenance()
+        if (success) {
+            showStatus('success', 'Техобслуживание включено глобально')
+            // Обновляем состояние после изменения
+            await loadState()
+        } else {
+            showStatus('error', 'Ошибка при включении техобслуживания')
+        }
     } catch (error) {
-        console.error('Failed to enable maintenance:', error)
+        console.error('Error enabling maintenance:', error)
+        showStatus('error', 'Ошибка при включении техобслуживания')
     } finally {
         loading.value = false
     }
@@ -140,14 +170,30 @@ const enableMaintenance = async () => {
 
 const disableMaintenance = async () => {
     loading.value = true
+    operationStatus.value = null
+
     try {
-        await disable()
-        console.log('Maintenance disabled globally')
+        const success = await disableMaintenance()
+        if (success) {
+            showStatus('success', 'Техобслуживание отключено глобально')
+            // Обновляем состояние после изменения
+            await loadState()
+        } else {
+            showStatus('error', 'Ошибка при отключении техобслуживания')
+        }
     } catch (error) {
-        console.error('Failed to disable maintenance:', error)
+        console.error('Error disabling maintenance:', error)
+        showStatus('error', 'Ошибка при отключении техобслуживания')
     } finally {
         loading.value = false
     }
+}
+
+const showStatus = (type: 'success' | 'error', message: string) => {
+    operationStatus.value = { type, message }
+    setTimeout(() => {
+        operationStatus.value = null
+    }, 5000)
 }
 
 const testAsUser = () => {
@@ -165,6 +211,7 @@ const formatDate = (timestamp: number | null) => {
 
 // Загружаем состояние при монтировании
 onMounted(async () => {
-    await load()
+    await loadState()
+    console.log('Admin panel mounted, maintenance state:', state.value)
 })
 </script>
