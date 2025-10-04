@@ -8,7 +8,9 @@
 <template>
 
   <NuxtLayout>
-
+    <!-- fff -->
+    <Analytics />
+    <!-- fff -->
     <NuxtPage />
     <div>
       <ScrollToTop />
@@ -26,6 +28,10 @@ useHead({
     return titleChunk ? `${titleChunk} - NimbleSites` : 'NimbleSites'
   }
 })
+
+
+
+import { Analytics } from '@vercel/analytics/nuxt'
 </script>
 
 <style scoped></style>

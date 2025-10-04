@@ -1,510 +1,747 @@
 <template>
-
-    <div class="container mx-auto px-4 py-12">
-        <h2 class="text-3xl font-bold text-center mb-12 text-white">С чем мы можем вам помочь?</h2>
-
-        <!-- Сетка карточек -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 transition-all">
-
-            <!-- Карточка 1 -->
-            <div class="group block h-full">
-                <div
-                    class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden text-white h-full flex flex-col border border-gray-700/50">
-                    <div class="relative h-52 overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20">
-                            <img src="\images\tovars\Web.jpg" alt="web"
-                                class="w-full h-full bg-gradient-to-br from-[#7216f4]/30 to-[#9a54f9]/30 flex items-center justify-center">
-                                <div class="text-center">
-                                    <svg class="w-16 h-16 text-white/20 mx-auto mb-2" fill="currentColor"
-                                        viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="text-white/40 text-sm">Пример работы</span>
+    <section ref="sectionRef" class="services-section" :class="{ 'animate-in': isInView }">
+        <div class="container">
+            <h2 class="section-title">Наши услуги</h2>
+            <div class="services-grid">
+                <div v-for="(service, index) in services" :key="service.title" class="service-card"
+                    :style="`--i: ${index}`" @mouseenter="startAnimation(index)" @mouseleave="stopAnimation(index)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="card-bg" :style="service.bgStyle"></div>
+                            <div class="card-overlay"></div>
+                            <div class="card-content">
+                                <div class="icon-wrapper">
+                                    <div class="animated-icon">
+                                        {{ service.icon }}
+                                    </div>
                                 </div>
-                            </img>
-                        </div>
-                        <div
-                            class="absolute top-4 left-4 bg-[#7216f4] text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm">
-                            3-14 дней
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                            <div
-                                class="opacity-0 group-hover:opacity-100 transform group-hover:scale-100 scale-90 transition-all duration-500">
-                                <div
-                                    class="bg-[#7216f4] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center">
-                                    <NuxtLink to="/shablon">Смотреть работы</NuxtLink>
-                                    <NuxtLink to="/shablon">
-                                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </NuxtLink>
+                                <h3 class="card-title">{{ service.title }}</h3>
+                                <p class="card-description">{{ service.description }}</p>
+                                <div class="hover-indicator">
+                                    <span>Подробнее</span>
+                                    <div class="arrow">→</div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-start justify-between mb-4">
-                            <h3 class="text-xl font-bold text-white">Web-разработка</h3>
-                            <div
-                                class="w-10 h-10 bg-black/30 rounded-full flex items-center justify-center transition-all group-hover:bg-[#7216f4] backdrop-blur-sm">
-                                <NuxtLink to="/shablon">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </NuxtLink>
+
+                        <div class="card-back">
+                            <div class="card-bg" :style="service.bgStyle"></div>
+                            <div class="card-overlay"></div>
+                            <div class="back-content">
+                                <div class="back-icon">
+                                    {{ service.icon }}
+                                </div>
+                                <h3 class="back-title">{{ service.title }}</h3>
+                                <ul class="feature-list">
+                                    <li v-for="feature in service.features" :key="feature">
+                                        {{ feature }}
+                                    </li>
+                                </ul>
+                                <button class="cta-button">
+                                    <span>Обсудить проект</span>
+                                    <div class="button-arrow">→</div>
+                                </button>
                             </div>
-                        </div>
-                        <p class="text-gray-300 mb-5 leading-relaxed flex-1">
-                            Создание современных интерфейсов с использованием передовых технологий и фреймворков
-                        </p>
-                        <div class="space-y-3 mb-5">
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
-                                <span>Высокая производительность</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span>Адаптивный дизайн</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-700/50">
-                            <div>
-                                <div class="text-[#f9d1f9] font-bold text-lg">от 3500 ₽</div>
-                                <div class="text-gray-400 text-xs">индивидуальный расчет</div>
-                            </div>
-                            <NuxtLink to="https://t.me/TakaMorY"
-                                class="bg-[#7216f4] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#8a3ef5] transition-colors duration-300 transform hover:scale-105">
-                                Обсудить проект
-                            </NuxtLink>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Карточка 2: Работа с нейросетями -->
-            <div class="group block h-full">
-                <div
-                    class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden text-white h-full flex flex-col border border-gray-700/50">
-                    <div class="relative h-52 overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20">
-                            <img src="\images\tovars\ai.jpg" alt="ai"
-                                class="w-full h-full bg-gradient-to-br from-[#7216f4]/30 to-[#9a54f9]/30 flex items-center justify-center">
-                            <div class="text-center">
-
-                                <svg class="w-16 h-16 text-white/20 mx-auto mb-2" fill="currentColor"
-                                    viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                <span class="text-white/40 text-sm">AI примеры</span>
-
-                            </div>
-                            </img>
-                        </div>
-                        <div
-                            class="absolute top-4 left-4 bg-[#7216f4] text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm">
-                            1-5 дней
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                            <div
-                                class="opacity-0 group-hover:opacity-100 transform group-hover:scale-100 scale-90 transition-all duration-500">
-                                <div
-                                    class="bg-[#7216f4] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center">
-                                    <NuxtLink to="https://t.me/TakaMorY">
-                                        <span>Обсудить задачу</span>
-                                    </NuxtLink>
-                                    <NuxtLink to="https://t.me/TakaMorY">
-                                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </NuxtLink>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-start justify-between mb-4">
-                            <h3 class="text-xl font-bold text-white">Работа с нейросетями</h3>
-                            <div
-                                class="w-10 h-10 bg-black/30 rounded-full flex items-center justify-center transition-all group-hover:bg-[#7216f4] backdrop-blur-sm">
-                                <NuxtLink to="https://t.me/TakaMorY">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </NuxtLink>
-                            </div>
-                        </div>
-                        <p class="text-gray-300 mb-5 leading-relaxed flex-1">
-                            AI-решения для бизнеса любой сложности и автоматизация процессов
-                        </p>
-                        <div class="space-y-3 mb-5">
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                                    </path>
-                                </svg>
-                                <span>Интеллектуальные решения</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
-                                <span>Автоматизация процессов</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-700/50">
-                            <div>
-                                <div class="text-[#f9d1f9] font-bold text-lg">от 200 ₽</div>
-                                <div class="text-gray-400 text-xs"></div>
-                            </div>
-                            <NuxtLink to="https://t.me/TakaMorY"
-                                class="bg-[#7216f4] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#8a3ef5] transition-colors duration-300 transform hover:scale-105">
-                                Обсудить проект
-                            </NuxtLink>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Карточка 3: Дизайн карточек -->
-            <div class="group block h-full">
-                <div
-                    class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden text-white h-full flex flex-col border border-gray-700/50">
-                    <div class="relative h-52 overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20">
-                            <img src="\images\tovars\card.jpg" alt="card"
-                                class="w-full h-full bg-gradient-to-br from-[#7216f4]/30 to-[#9a54f9]/30 flex items-center justify-center">
-                                <div class="text-center">
-                                    <svg class="w-16 h-16 text-white/20 mx-auto mb-2" fill="currentColor"
-                                        viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="text-white/40 text-sm">Дизайн пример</span>
-                                </div>
-                            </img>
-                        </div>
-                        <div
-                            class="absolute top-4 left-4 bg-[#7216f4] text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm">
-                            1-5 дней
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                            <div
-                                class="opacity-0 group-hover:opacity-100 transform group-hover:scale-100 scale-90 transition-all duration-500">
-                                <div
-                                    class="bg-[#7216f4] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center">
-                                    <NuxtLink to="/shablon">
-                                        <span>Смотреть работы</span>
-                                    </NuxtLink>
-                                    <NuxtLink to="/shablon">
-                                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </NuxtLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-start justify-between mb-4">
-                            <h3 class="text-xl font-bold text-white">Дизайн карточек</h3>
-                            <div
-                                class="w-10 h-10 bg-black/30 rounded-full flex items-center justify-center transition-all group-hover:bg-[#7216f4] backdrop-blur-sm">
-                                <NuxtLink to="/shablon">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </NuxtLink>
-                            </div>
-                        </div>
-                        <p class="text-gray-300 mb-5 leading-relaxed flex-1">
-                            Визуал для продуктов и услуг с уникальным дизайном и готовыми шаблонами
-                        </p>
-                        <div class="space-y-3 mb-5">
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span>Уникальный дизайн</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                                    </path>
-                                </svg>
-                                <span>Готовые шаблоны</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-700/50">
-                            <div>
-                                <div class="text-[#f9d1f9] font-bold text-lg">от 300 ₽</div>
-                                <div class="text-gray-400 text-xs">за карточку</div>
-                            </div>
-                            <NuxtLink to="https://t.me/TakaMorY"
-                                class="bg-[#7216f4] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#8a3ef5] transition-colors duration-300 transform hover:scale-105">
-                                Обсудить проект
-                            </NuxtLink>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Карточка 4: Оформление соц. сетей -->
-            <div class="group block h-full">
-                <div
-                    class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden text-white h-full flex flex-col border border-gray-700/50">
-                    <div class="relative h-52 overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20">
-                            <img src="\images\tovars\soc.jpg" alt="social"
-                                class="w-full h-full bg-gradient-to-br from-[#7216f4]/30 to-[#9a54f9]/30 flex items-center justify-center">
-                                <div class="text-center">
-                                    <svg class="w-16 h-16 text-white/20 mx-auto mb-2" fill="currentColor"
-                                        viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="text-white/40 text-sm">Соцсети пример</span>
-                                </div>
-                            </img>
-                        </div>
-                        <div
-                            class="absolute top-4 left-4 bg-[#7216f4] text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm">
-                            2-14 дней
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                            <div
-                                class="opacity-0 group-hover:opacity-100 transform group-hover:scale-100 scale-90 transition-all duration-500">
-                                <div
-                                    class="bg-[#7216f4] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center">
-                                    <NuxtLink to="https://t.me/TakaMorY">
-                                        <span>Обсудить проект</span>
-                                    </NuxtLink>
-                                    <NuxtLink to="https://t.me/TakaMorY">
-                                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </NuxtLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-start justify-between mb-4">
-                            <h3 class="text-xl font-bold text-white">Оформление соц. сетей</h3>
-                            <div
-                                class="w-10 h-10 bg-black/30 rounded-full flex items-center justify-center transition-all group-hover:bg-[#7216f4] backdrop-blur-sm">
-                                <NuxtLink to="https://t.me/TakaMorY">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </NuxtLink>
-                            </div>
-                        </div>
-                        <p class="text-gray-300 mb-5 leading-relaxed flex-1">
-                            Контент для Instagram и других платформ с привлечением аудитории
-                        </p>
-                        <div class="space-y-3 mb-5">
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z">
-                                    </path>
-                                </svg>
-                                <span>Привлечение аудитории</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span>Единый стиль</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-700/50">
-                            <div>
-                                <div class="text-[#f9d1f9] font-bold text-lg">от 250 ₽</div>
-                                <div class="text-gray-400 text-xs">за пост</div>
-                            </div>
-
-                            <NuxtLink to="https://t.me/TakaMorY" class="bg-[#7216f4] text-white px-4 py-2 rounded-lg text-sm font-semibold
-                                hover:bg-[#8a3ef5] transition-colors duration-300 transform hover:scale-105">
-                                Обсудить проект
-                            </NuxtLink>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Карточка 5: Обработка фото -->
-            <div class="group block h-full">
-                <div
-                    class="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden text-white h-full flex flex-col border border-gray-700/50">
-                    <div class="relative h-52 overflow-hidden">
-                        <div class="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-500/20">
-                            <img src="\images\tovars\shablon.jpg" alt="shablons"
-                                class="w-full h-full bg-gradient-to-br from-[#7216f4]/30 to-[#9a54f9]/30 flex items-center justify-center">
-                                <div class="text-center">
-                                    <svg class="w-16 h-16 text-white/20 mx-auto mb-2" fill="currentColor"
-                                        viewBox="0 0 20 20">
-                                        <path fill-rule="evenodd"
-                                            d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-                                    <span class="text-white/40 text-sm">Фото пример</span>
-                                </div>
-                            </img>
-                        </div>
-                        <div
-                            class="absolute top-4 left-4 bg-[#7216f4] text-white text-xs px-3 py-1.5 rounded-full font-medium backdrop-blur-sm">
-                            1-3 дня
-                        </div>
-                        <div
-                            class="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-500 flex items-center justify-center">
-                            <div
-                                class="opacity-0 group-hover:opacity-100 transform group-hover:scale-100 scale-90 transition-all duration-500">
-                                <div
-                                    class="bg-[#7216f4] text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center">
-                                    <NuxtLink to="/shablon">
-                                        <span>Смотреть шаблоны</span>
-                                    </NuxtLink>
-                                    <NuxtLink to="/shablon">
-                                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M9 5l7 7-7 7"></path>
-                                        </svg>
-                                    </NuxtLink>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 flex-1 flex flex-col">
-                        <div class="flex items-start justify-between mb-4">
-                            <h3 class="text-xl font-bold text-white">Готовые шаблоны</h3>
-                            <div
-                                class="w-10 h-10 bg-black/30 rounded-full flex items-center justify-center transition-all group-hover:bg-[#7216f4] backdrop-blur-sm">
-                                <NuxtLink to="/shablon">
-                                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-                                    </svg>
-                                </NuxtLink>
-                            </div>
-                        </div>
-                        <p class="text-gray-300 mb-5 leading-relaxed flex-1">
-                            Шаблоны для сайтов и дизайна карточек
-                        </p>
-                        <div class="space-y-3 mb-5">
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
-                                    </path>
-                                </svg>
-                                <span>Готовые дизайны карточек</span>
-                            </div>
-                            <div class="flex items-center text-sm text-gray-400">
-                                <svg class="w-4 h-4 mr-2 text-[#7216f4]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
-                                    </path>
-                                </svg>
-                                <span>Готовые шаблоны для сайтов</span>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-between pt-4 border-t border-gray-700/50">
-                            <div>
-                                <div class="text-[#f9d1f9] font-bold text-lg">от 1000 ₽</div>
-                                <div class="text-gray-400 text-xs">за проект</div>
-                            </div>
-                            <NuxtLink to="https://t.me/TakaMorY"
-                                class="bg-[#7216f4] text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-[#8a3ef5] transition-colors duration-300 transform hover:scale-105">
-                                Обсудить проект
-                            </NuxtLink>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- карточка 6 -->
-
-
         </div>
 
-        <!-- Призыв к действию -->
-        <div class="text-center mt-16">
-            <p class="text-gray-600 mb-6 max-w-2xl mx-auto text-lg">
-                Еще больше об услугах, которые мы предоставляем, вы можете узнать, связавшись с нами!
-            </p>
-            <NuxtLink to="https://t.me/TakaMorY" class="
-      inline-flex items-center justify-center
-      px-8 py-4  
-      h-14        
-      min-w-40   
-      text-lg font-semibold 
-      text-white
-      hover:text-black bg-[#7216f4] 
-      rounded-lg 
-      hover:bg-[#f9d1f9] 
-      transition-all
-      border-2 border-transparent
-      hover:border-indigo-100
-      group duration-300 transform hover:translate-x-1
-    ">
-                Обсудить проект
-                <svg xmlns="http://www.w3.org/2000/svg"
-                    class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                    <polyline points="12 5 19 12 12 19"></polyline>
-                </svg>
-            </NuxtLink>
+        <!-- Оптимизированные декоративные элементы -->
+        <div class="bg-decoration">
+            <div class="floating-orb orb-1"></div>
+            <div class="floating-orb orb-2"></div>
+            <div class="floating-orb orb-3"></div>
         </div>
-    </div>
 
+        <!-- Анимированный фон с частицами -->
+        <div class="animated-bg">
+            <div class="grid-pattern"></div>
+            <div class="pulse-element pulse-1"></div>
+            <div class="pulse-element pulse-2"></div>
+            <div class="pulse-element pulse-3"></div>
+        </div>
+    </section>
 </template>
+
+<script setup>
+// Оптимизированный наблюдатель за скроллом
+const sectionRef = ref(null);
+const isInView = ref(false);
+
+const { stop } = useIntersectionObserver(
+    sectionRef,
+    ([{ isIntersecting }]) => {
+        if (isIntersecting && !isInView.value) {
+            isInView.value = true;
+            stop(); // Останавливаем наблюдение после первого срабатывания
+        }
+    },
+    {
+        threshold: 0.2,
+        rootMargin: '50px'
+    }
+);
+
+const services = ref([
+    {
+        icon: "💻",
+        title: "Веб-разработка",
+        description: "Создание современных и адаптивных веб-сайтов",
+        features: [
+            "Адаптивный дизайн",
+            "Оптимизация скорости",
+            "SEO-оптимизация",
+            "Техническая поддержка"
+        ],
+        // Серо-фиолетовые градиенты
+        bgStyle: "background: linear-gradient(135deg, rgba(55, 65, 81, 0.9), rgba(76, 29, 149, 0.7)), url('/images/web-dev-bg.jpg') center/cover;"
+    },
+    {
+        icon: "🎨",
+        title: "UI/UX Дизайн",
+        description: "Интуитивные и привлекательные интерфейсы",
+        features: [
+            "Прототипирование",
+            "Дизайн-системы",
+            "Анимации",
+            "User Research"
+        ],
+        bgStyle: "background: linear-gradient(135deg, rgba(75, 85, 99, 0.9), rgba(91, 33, 182, 0.7)), url('/images/ui-ux-bg.jpg') center/cover;"
+    },
+    {
+        icon: "🚀",
+        title: "Оптимизация",
+        description: "Ускорение работы вашего сайта",
+        features: [
+            "Анализ производительности",
+            "Оптимизация кода",
+            "Кэширование",
+            "CDN настройка"
+        ],
+        bgStyle: "background: linear-gradient(135deg, rgba(107, 114, 128, 0.9), rgba(124, 58, 237, 0.7)), url('/images/optimization-bg.jpg') center/cover;"
+    },
+    {
+        icon: "🛒",
+        title: "E-commerce",
+        description: "Интернет-магазины любой сложности",
+        features: [
+            "Корзина покупок",
+            "Платежные системы",
+            "Управление товарами",
+            "Аналитика продаж"
+        ],
+        bgStyle: "background: linear-gradient(135deg, rgba(55, 65, 81, 0.9), rgba(109, 40, 217, 0.7)), url('/images/ecommerce-bg.jpg') center/cover;"
+    },
+    {
+        icon: "📱",
+        title: "Мобильная адаптация",
+        description: "Идеальное отображение на всех устройствах",
+        features: [
+            "Mobile-first подход",
+            "Touch-оптимизация",
+            "Быстрая загрузка",
+            "Нативные ощущения"
+        ],
+        bgStyle: "background: linear-gradient(135deg, rgba(75, 85, 99, 0.9), rgba(76, 29, 149, 0.7)), url('/images/mobile-bg.jpg') center/cover;"
+    },
+    {
+        icon: "🔧",
+        title: "Техническая поддержка",
+        description: "Постоянное сопровождение и развитие",
+        features: [
+            "Регулярные обновления",
+            "Мониторинг работы",
+            "Резервное копирование",
+            "Консультации"
+        ],
+        bgStyle: "background: linear-gradient(135deg, rgba(107, 114, 128, 0.9), rgba(91, 33, 182, 0.7)), url('/images/support-bg.jpg') center/cover;"
+    }
+]);
+
+const animatedCards = ref([]);
+
+const startAnimation = (index) => {
+    animatedCards.value[index] = true;
+};
+
+const stopAnimation = (index) => {
+    animatedCards.value[index] = false;
+};
+
+// Оптимизация производительности
+onMounted(() => {
+    // Предзагрузка критических ресурсов
+    if ('requestIdleCallback' in window) {
+        requestIdleCallback(() => {
+            // Фоновая предзагрузка
+        });
+    }
+});
+</script>
+
+<style scoped>
+.services-section {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%);
+    padding: 4rem 1rem;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-section.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.container {
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 2;
+}
+
+.section-title {
+    font-size: 2.25rem;
+    font-weight: 700;
+    text-align: center;
+    color: #f9fafb;
+    margin-bottom: 4rem;
+    animation: gentleFadeIn 2s ease-out;
+    text-shadow: 0 2px 20px rgba(139, 92, 246, 0.2);
+}
+
+@media (min-width: 768px) {
+    .section-title {
+        font-size: 3rem;
+    }
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+}
+
+@media (min-width: 768px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 1024px) {
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.service-card {
+    height: 26rem;
+    cursor: pointer;
+    perspective: 1200px;
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.services-section.animate-in .service-card {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.service-card:nth-child(1) {
+    transition-delay: 0.1s;
+}
+
+.service-card:nth-child(2) {
+    transition-delay: 0.2s;
+}
+
+.service-card:nth-child(3) {
+    transition-delay: 0.3s;
+}
+
+.service-card:nth-child(4) {
+    transition-delay: 0.4s;
+}
+
+.service-card:nth-child(5) {
+    transition-delay: 0.5s;
+}
+
+.service-card:nth-child(6) {
+    transition-delay: 0.6s;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+.service-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 1rem;
+    overflow: hidden;
+    backface-visibility: hidden;
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+/* Общие стили для фона и оверлея */
+.card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+            rgba(31, 41, 55, 0.8) 0%,
+            rgba(55, 65, 81, 0.6) 50%,
+            rgba(17, 24, 39, 0.9) 100%);
+}
+
+.service-card:hover .card-bg {
+    transform: scale(1.05);
+}
+
+/* Стили для лицевой стороны */
+.card-front .card-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.icon-wrapper {
+    margin-bottom: 1.5rem;
+}
+
+.animated-icon {
+    font-size: 3rem;
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.service-card:hover .animated-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.card-description {
+    color: #d1d5db;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.hover-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #9ca3af;
+    font-size: 0.9rem;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-card:hover .hover-indicator {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hover-indicator .arrow {
+    transition: transform 0.6s ease;
+}
+
+.service-card:hover .hover-indicator .arrow {
+    transform: translateX(3px);
+}
+
+/* Стили для обратной стороны */
+.back-content {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.back-icon {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+.back-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.feature-list {
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.feature-list li {
+    color: #e5e7eb;
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    transition: all 0.4s ease;
+    padding: 0.25rem 0;
+}
+
+.feature-list li:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+.feature-list li::before {
+    content: "▸";
+    color: #8b5cf6;
+    margin-right: 0.5rem;
+    transition: all 0.4s ease;
+}
+
+.feature-list li:hover::before {
+    color: #a78bfa;
+    transform: scale(1.1);
+}
+
+.cta-button {
+    width: 100%;
+    padding: 0.875rem 1.25rem;
+    background: linear-gradient(135deg, #6b7280 0%, #4c1d95 100%);
+    color: white;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(76, 29, 149, 0.3);
+}
+
+.cta-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.8s ease;
+}
+
+.cta-button:hover {
+    background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 29, 149, 0.4);
+}
+
+.cta-button:hover::before {
+    left: 100%;
+}
+
+.cta-button:hover .button-arrow {
+    transform: translateX(3px);
+}
+
+.button-arrow {
+    transition: transform 0.4s ease;
+}
+
+/* Оптимизированные декоративные элементы */
+.bg-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.floating-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.05;
+    animation: float 12s ease-in-out infinite;
+    will-change: transform;
+}
+
+.orb-1 {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #6b7280, #7c3aed);
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.orb-2 {
+    width: 150px;
+    height: 150px;
+    background: linear-gradient(135deg, #4b5563, #5b21b6);
+    top: 65%;
+    right: 15%;
+    animation-delay: -4s;
+}
+
+.orb-3 {
+    width: 180px;
+    height: 180px;
+    background: linear-gradient(135deg, #374151, #8b5cf6);
+    bottom: 20%;
+    left: 20%;
+    animation-delay: -8s;
+}
+
+/* Анимированный фон */
+.animated-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.3;
+}
+
+.grid-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(107, 114, 128, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(107, 114, 128, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+}
+
+.pulse-element {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.1);
+    animation: pulse 8s ease-in-out infinite;
+}
+
+.pulse-1 {
+    width: 100px;
+    height: 100px;
+    top: 20%;
+    right: 10%;
+    animation-delay: 0s;
+}
+
+.pulse-2 {
+    width: 150px;
+    height: 150px;
+    top: 60%;
+    left: 5%;
+    animation-delay: -2s;
+}
+
+.pulse-3 {
+    width: 80px;
+    height: 80px;
+    bottom: 30%;
+    right: 25%;
+    animation-delay: -4s;
+}
+
+/* Анимации */
+@keyframes gentleFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) translateX(0) scale(1);
+    }
+
+    33% {
+        transform: translateY(-15px) translateX(8px) scale(1.02);
+    }
+
+    66% {
+        transform: translateY(8px) translateX(-8px) scale(0.98);
+    }
+}
+
+@keyframes gridMove {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(50px, 50px);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.1;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 0.05;
+    }
+}
+
+/* Плавные переходы для всей карточки */
+.service-card {
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.service-card:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* Градиентная обводка */
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 1rem;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.4), rgba(76, 29, 149, 0.2));
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.service-card:hover::after {
+    opacity: 1;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 768px) {
+    .service-card {
+        height: 22rem;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+    }
+
+    .card-description {
+        font-size: 0.9rem;
+    }
+
+    .services-section {
+        padding: 2rem 1rem;
+    }
+
+    .card-front .card-content,
+    .back-content {
+        padding: 1.5rem;
+    }
+
+    .floating-orb {
+        display: none;
+    }
+
+    .grid-pattern {
+        background-size: 30px 30px;
+    }
+}
+
+/* Оптимизация для слабых устройств */
+@media (prefers-reduced-motion: reduce) {
+
+    .service-card,
+    .card-inner,
+    .animated-icon,
+    .cta-button,
+    .floating-orb,
+    .pulse-element {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    .services-section {
+        transition: opacity 0.5s ease !important;
+    }
+}
+</style>
