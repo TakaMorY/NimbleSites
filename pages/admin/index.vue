@@ -59,23 +59,19 @@
                             <p class="text-green-400 font-medium">✅ Режим техобслуживания АКТИВЕН</p>
                             <p class="text-gray-400 text-sm mt-1">Все пользователи автоматически перенаправляются на
                                 страницу техработ</p>
-                            <p class="text-gray-400 text-sm mt-2" v-if="state.enabledAt">
-                                Включен: {{ formatDate(state.enabledAt) }}
-                            </p>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-4">Тестирование</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <button @click="testAsUser"
-                            class="p-4 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-200">
-                            Открыть сайт как пользователь
-                        </button>
-                        <button @click="openNewAdmin"
-                            class="p-4 bg-purple-600 hover:bg-purple-700 rounded-lg text-white transition-colors duration-200">
-                            Открыть новую админ-сессию
+                <!-- Отладочная информация -->
+                <div v-if="debug" class="bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-700">
+                    <h3 class="text-lg font-semibold text-white mb-4">Отладка</h3>
+                    <div class="text-sm text-gray-400 space-y-2">
+                        <p>isAdmin: {{ isAdmin }}</p>
+                        <p>Maintenance state: {{ state }}</p>
+                        <button @click="clearAllData"
+                            class="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition-colors duration-200">
+                            Очистить все данные
                         </button>
                     </div>
                 </div>
@@ -88,34 +84,38 @@
 const { logout, isAdmin } = useAuth()
 const { state, enable, disable } = useMaintenance()
 
+const debug = ref(true) // Включить для отладки
+
 const handleLogout = () => {
     logout()
-    navigateTo('/admin/login')
+    window.location.href = '/admin/login'
 }
 
 const enableMaintenance = () => {
     enable()
+    console.log('Maintenance enabled')
 }
 
 const disableMaintenance = () => {
     disable()
+    console.log('Maintenance disabled')
 }
 
-const testAsUser = () => {
-    window.open('/', '_blank')
+const clearAllData = () => {
+    if (confirm('Очистить все данные?')) {
+        localStorage.removeItem('adminSession')
+        localStorage.removeItem('maintenanceState')
+        window.location.reload()
+    }
 }
 
-const openNewAdmin = () => {
-    window.open('/admin', '_blank')
-}
-
-const formatDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleString('ru-RU')
-}
-
+// Защита роута - если не админ, перенаправляем на логин
 onMounted(() => {
     if (!isAdmin.value) {
-        navigateTo('/admin/login')
+        console.log('Not admin, redirecting to login')
+        window.location.href = '/admin/login'
+    } else {
+        console.log('Admin access granted')
     }
 })
 </script>

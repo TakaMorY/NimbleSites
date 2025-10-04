@@ -53,6 +53,13 @@
                     <p class="text-gray-400 text-sm">Для тестирования используйте пароль: <code
                             class="text-purple-300">admin123</code></p>
                 </div>
+
+                <!-- Отладочная информация -->
+                <div v-if="debug" class="mt-4 p-3 bg-yellow-500/20 rounded-lg">
+                    <p class="text-yellow-400 text-sm">Отладка:</p>
+                    <p class="text-yellow-400 text-sm">isAdmin: {{ isAdmin }}</p>
+                    <p class="text-yellow-400 text-sm">Пароль введен: {{ password }}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -64,12 +71,14 @@ definePageMeta({
 })
 
 const { login, isAdmin } = useAuth()
+const router = useRouter()
 
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
+const debug = ref(true) // Включить для отладки
 
-const handleLogin = async () => {
+const handleLogin = () => {
     if (!password.value.trim()) {
         error.value = 'Введите пароль'
         return
@@ -78,25 +87,31 @@ const handleLogin = async () => {
     loading.value = true
     error.value = ''
 
-    try {
-        const success = login(password.value)
+    // Используем setTimeout чтобы дать интерфейсу обновиться
+    setTimeout(() => {
+        try {
+            const success = login(password.value)
 
-        if (success) {
-            await navigateTo('/admin')
-        } else {
-            error.value = 'Неверный пароль'
+            if (success) {
+                console.log('Login successful, isAdmin:', isAdmin.value)
+                // Используем window.location для надежного перехода
+                window.location.href = '/admin'
+            } else {
+                error.value = 'Неверный пароль'
+            }
+        } catch (err) {
+            error.value = 'Ошибка при входе'
+            console.error('Login error:', err)
+        } finally {
+            loading.value = false
         }
-    } catch (err) {
-        error.value = 'Ошибка при входе'
-        console.error('Login error:', err)
-    } finally {
-        loading.value = false
-    }
+    }, 100)
 }
 
+// Если уже залогинен, перенаправляем
 onMounted(() => {
     if (isAdmin.value) {
-        navigateTo('/admin')
+        window.location.href = '/admin'
     }
 })
 </script>

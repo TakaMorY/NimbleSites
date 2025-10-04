@@ -2,27 +2,26 @@
 export const useAuth = () => {
     const isAdmin = ref(false)
 
-    const init = () => {
-        if (process.client) {
-            const saved = localStorage.getItem('adminSession')
-            if (saved) {
-                try {
-                    const session = JSON.parse(saved)
-                    // Проверяем срок действия сессии (30 дней)
-                    const sessionDuration = 30 * 24 * 60 * 60 * 1000
-                    if (session.loginTime && Date.now() - session.loginTime < sessionDuration) {
-                        isAdmin.value = true
-                    } else {
-                        localStorage.removeItem('adminSession')
-                    }
-                } catch (e) {
+    // Инициализация при создании композабла
+    if (process.client) {
+        const saved = localStorage.getItem('adminSession')
+        if (saved) {
+            try {
+                const session = JSON.parse(saved)
+                // Проверяем срок действия сессии (30 дней)
+                const sessionDuration = 30 * 24 * 60 * 60 * 1000
+                if (session.loginTime && Date.now() - session.loginTime < sessionDuration) {
+                    isAdmin.value = true
+                } else {
                     localStorage.removeItem('adminSession')
                 }
+            } catch (e) {
+                localStorage.removeItem('adminSession')
             }
         }
     }
 
-    const login = (password: string) => {
+    const login = (password: string): boolean => {
         // Простая проверка пароля
         if (password === 'admin123') {
             const session = {
@@ -41,7 +40,7 @@ export const useAuth = () => {
         return false
     }
 
-    const logout = () => {
+    const logout = (): void => {
         isAdmin.value = false
 
         if (process.client) {
@@ -51,7 +50,6 @@ export const useAuth = () => {
 
     return {
         isAdmin: readonly(isAdmin),
-        init,
         login,
         logout
     }
