@@ -1,17 +1,19 @@
 // middleware/maintenance.global.ts
 export default defineNuxtRouteMiddleware((to) => {
-    const { isAdmin } = useAuth()
-    const { state } = useMaintenance()
+    const maintenanceMode = true // Переключите при необходимости
 
-    if (to.path === '/maintenance' || to.path === '/admin/login') {
-        return
+    // Если режим техобслуживания ВКЛЮЧЕН
+    if (maintenanceMode) {
+        // Редиректим все запросы на страницу техобслуживания
+        if (to.path !== '/maintenance') {
+            return navigateTo('/maintenance')
+        }
     }
-
-    if (isAdmin.value) {
-        return
-    }
-
-    if (state.value.enabled) {
-        return navigateTo('/maintenance')
+    // Если режим техобслуживания ВЫКЛЮЧЕН
+    else {
+        // Блокируем доступ к странице техобслуживания
+        if (to.path === '/maintenance') {
+            return navigateTo('/')
+        }
     }
 })

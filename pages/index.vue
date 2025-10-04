@@ -41,7 +41,7 @@ import { ref } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 
 
-const { state } = useMaintenance()
+
 
 definePageMeta({
     layout: 'default' // Явное указание layout

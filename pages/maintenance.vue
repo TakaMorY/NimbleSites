@@ -1,77 +1,149 @@
-<!-- pages/maintenance.vue -->
 <template>
     <div
-        class="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-gray-800 flex items-center justify-center p-4 relative overflow-hidden">
-        <div class="absolute inset-0">
-            <div class="absolute inset-0 bg-gradient-to-br from-gray-900/80 via-purple-900/60 to-gray-800/80"></div>
+        class="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-800 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        <!-- Анимированный фон -->
+        <div class="absolute inset-0 overflow-hidden">
+            <!-- Градиентные шары -->
+            <div class="absolute -top-20 -left-20 w-72 h-72 bg-purple-600/10 rounded-full blur-3xl"></div>
+            <div class="absolute -bottom-20 -right-20 w-72 h-72 bg-violet-600/10 rounded-full blur-3xl"></div>
             <div
-                class="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-purple-600/20 to-pink-500/10 rounded-full blur-3xl animate-pulse">
-            </div>
-            <div
-                class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-gradient-to-r from-indigo-500/15 to-purple-700/10 rounded-full blur-3xl animate-pulse delay-1000">
-            </div>
-        </div>
-
-        <div class="max-w-lg w-full relative z-10">
-            <div
-                class="bg-gray-800/40 backdrop-blur-2xl rounded-3xl shadow-2xl border border-purple-500/20 p-8 transform transition-all duration-700">
-                <div class="text-center mb-8">
-                    <div
-                        class="inline-flex items-center justify-center w-24 h-24 rounded-2xl bg-gradient-to-br from-purple-600 to-violet-700 shadow-lg mb-6">
-                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        </svg>
-                    </div>
-
-                    <h1
-                        class="text-4xl font-bold bg-gradient-to-r from-purple-200 to-violet-100 bg-clip-text text-transparent mb-3">
-                        Технические работы
-                    </h1>
-                    <p class="text-purple-200 text-xl font-light">
-                        Мы работаем над улучшением сервиса
-                    </p>
-                </div>
-
-                <div class="flex justify-center mb-8">
-                    <div class="relative">
-                        <div class="w-28 h-28 rounded-full border-4 border-gray-600/30"></div>
-                        <div
-                            class="absolute top-0 left-0 w-28 h-28 rounded-full border-4 border-transparent border-t-purple-400 border-r-violet-400 animate-spin-slow">
-                        </div>
-                        <div
-                            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-gradient-to-r from-purple-400 to-violet-400 shadow-lg">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center">
-                    <p class="text-purple-200/70 mb-4">
-                        Сайт временно недоступен. Мы проводим плановые технические работы для улучшения вашего опыта.
-                    </p>
-                    <p class="text-purple-300/50 text-sm">
-                        Приносим извинения за временные неудобства
-                    </p>
-                </div>
+                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/5 rounded-full blur-3xl">
             </div>
         </div>
+
+        <!-- Основной контент -->
+        <div class="relative z-10 text-center max-w-2xl mx-auto">
+            <!-- Заголовок -->
+            <div class="mb-12">
+                <h1
+                    class="text-5xl md:text-6xl font-bold bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent mb-6">
+                    Техническое обслуживание
+                </h1>
+                <p class="text-xl text-purple-200/80 font-light">
+                    Мы работаем над улучшением вашего опыта
+                </p>
+            </div>
+
+            <!-- Улучшенный индикатор загрузки -->
+            <div class="flex justify-center items-center space-x-4 mb-12">
+                <!-- Пульсирующий контейнер -->
+                <div class="relative">
+                    <div class="absolute inset-0 animate-ping bg-purple-400/20 rounded-full"></div>
+                    <div class="relative flex space-x-3">
+                        <div v-for="(ball, index) in balls" :key="index"
+                            class="h-12 w-12 bg-gradient-to-br from-white to-purple-100 rounded-full shadow-lg border border-purple-200/20"
+                            :style="{
+                                animationDelay: `${index * 0.15}s`,
+                                transform: `translateY(${ball.y}px)`
+                            }"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Информационный блок -->
+            <div class="bg-slate-800/40 backdrop-blur-lg rounded-2xl p-8 border border-purple-500/20 mb-8">
+                <div class="flex items-center justify-center mb-4">
+                    <svg class="w-8 h-8 text-purple-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-lg text-white font-medium">Сайт временно недоступен</p>
+                </div>
+                <p class="text-purple-100/80 leading-relaxed">
+                    В настоящее время мы проводим плановые технические работы для улучшения
+                    производительности и добавления новых функций. Приносим извинения за временные неудобства.
+                </p>
+            </div>
+
+
+
+
+
+
+        </div>
+
+
+
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 definePageMeta({
     layout: false
 })
 
-const style = `
-@keyframes spin-slow {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-.animate-spin-slow {
-  animation: spin-slow 3s linear infinite;
-}
-`
 
 
+
+import { ref, onMounted, onUnmounted } from 'vue'
+
+// Состояние для прыгающих шариков
+const balls = ref([
+    { y: 0 },
+    { y: 0 },
+    { y: 0 }
+])
+
+// Прогресс работ
+const progress = ref(0)
+
+// Анимация прыгающих шариков
+let animationFrame
+
+const animateBalls = () => {
+    const time = Date.now() * 0.001
+    balls.value.forEach((ball, index) => {
+        // Каждый шарик прыгает со своей частотой
+        ball.y = Math.sin(time * 2 + index * 0.5) * -15
+    })
+    animationFrame = requestAnimationFrame(animateBalls)
+}
+
+// Имитация прогресса работ
+let progressInterval
+
+onMounted(() => {
+    // Запуск анимации шариков
+    animateBalls()
+
+    // Имитация прогресса
+    progressInterval = setInterval(() => {
+        if (progress.value < 100) {
+            progress.value += 0.5
+        } else {
+            clearInterval(progressInterval)
+        }
+    }, 100)
+})
+
+onUnmounted(() => {
+    if (animationFrame) cancelAnimationFrame(animationFrame)
+    if (progressInterval) clearInterval(progressInterval)
+})
 </script>
+
+<style scoped>
+/* Кастомные анимации для Tailwind */
+@keyframes bounce-custom {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.animate-bounce-custom {
+    animation: bounce-custom 1s infinite;
+}
+
+/* Улучшенная анимация для шариков */
+.ball-animation {
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+</style>
