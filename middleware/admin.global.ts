@@ -1,4 +1,4 @@
-// middleware/admin.global.ts
+// middleware/auth.global.ts
 export default defineNuxtRouteMiddleware((to) => {
     const { isAdmin } = useAuth()
 

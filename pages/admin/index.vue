@@ -35,55 +35,48 @@
                     </p>
 
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <button v-if="!state.enabled" @click="enableMaintenance" :disabled="loading"
-                            class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button v-if="!state.enabled" @click="enableMaintenance"
+                            class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
                             </svg>
-                            {{ loading ? 'Включение...' : 'Включить техработы' }}
+                            Включить техработы
                         </button>
 
-                        <button v-else @click="disableMaintenance" :disabled="loading"
-                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed">
+                        <button v-else @click="disableMaintenance"
+                            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors duration-200 flex items-center justify-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            {{ loading ? 'Отключение...' : 'Отключить техработы' }}
+                            Отключить техработы
                         </button>
                     </div>
 
                     <div v-if="state.enabled" class="mt-6 p-4 bg-gray-700/50 rounded-xl">
                         <div class="text-center">
-                            <p class="text-green-400 font-medium">✅ Глобальный режим техобслуживания АКТИВЕН</p>
+                            <p class="text-green-400 font-medium">✅ Режим техобслуживания АКТИВЕН</p>
                             <p class="text-gray-400 text-sm mt-1">Все пользователи автоматически перенаправляются на
                                 страницу техработ</p>
+                            <p class="text-gray-400 text-sm mt-2" v-if="state.enabledAt">
+                                Включен: {{ formatDate(state.enabledAt) }}
+                            </p>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-700">
-                    <h3 class="text-lg font-semibold text-white mb-4">Информация о системе</h3>
+                    <h3 class="text-lg font-semibold text-white mb-4">Тестирование</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Статус сервера</span>
-                                <span class="text-green-400 font-medium">Online</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Режим техработ</span>
-                                <span :class="state.enabled ? 'text-red-400' : 'text-green-400'" class="font-medium">
-                                    {{ state.enabled ? 'ВКЛЮЧЕН' : 'выключен' }}
-                                </span>
-                            </div>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Авторизация</span>
-                                <span class="text-green-400 font-medium">Администратор</span>
-                            </div>
-                        </div>
+                        <button @click="testAsUser"
+                            class="p-4 bg-blue-600 hover:bg-blue-700 rounded-lg text-white transition-colors duration-200">
+                            Открыть сайт как пользователь
+                        </button>
+                        <button @click="openNewAdmin"
+                            class="p-4 bg-purple-600 hover:bg-purple-700 rounded-lg text-white transition-colors duration-200">
+                            Открыть новую админ-сессию
+                        </button>
                     </div>
                 </div>
             </div>
@@ -93,43 +86,36 @@
 
 <script setup lang="ts">
 const { logout, isAdmin } = useAuth()
-const { state, loadState, enableMaintenance, disableMaintenance } = useMaintenance()
-
-const loading = ref(false)
+const { state, enable, disable } = useMaintenance()
 
 const handleLogout = () => {
     logout()
     navigateTo('/admin/login')
 }
 
-const enableMaintenanceHandler = async () => {
-    loading.value = true
-    try {
-        await enableMaintenance()
-        await loadState()
-    } catch (error) {
-        console.error('Error enabling maintenance:', error)
-    } finally {
-        loading.value = false
-    }
+const enableMaintenance = () => {
+    enable()
 }
 
-const disableMaintenanceHandler = async () => {
-    loading.value = true
-    try {
-        await disableMaintenance()
-        await loadState()
-    } catch (error) {
-        console.error('Error disabling maintenance:', error)
-    } finally {
-        loading.value = false
-    }
+const disableMaintenance = () => {
+    disable()
 }
 
-onMounted(async () => {
+const testAsUser = () => {
+    window.open('/', '_blank')
+}
+
+const openNewAdmin = () => {
+    window.open('/admin', '_blank')
+}
+
+const formatDate = (timestamp: number) => {
+    return new Date(timestamp).toLocaleString('ru-RU')
+}
+
+onMounted(() => {
     if (!isAdmin.value) {
         navigateTo('/admin/login')
     }
-    await loadState()
 })
 </script>

@@ -1,22 +1,20 @@
 // middleware/maintenance.global.ts
-export default defineNuxtRouteMiddleware(async (to) => {
+export default defineNuxtRouteMiddleware((to) => {
+    const { isAdmin } = useAuth()
+    const { state } = useMaintenance()
+
+    // Разрешаем доступ к странице техобслуживания и админ-логина
     if (to.path === '/maintenance' || to.path === '/admin/login') {
         return
     }
 
-    const { isAdmin } = useAuth()
-
+    // Админы имеют доступ ко всем страницам
     if (isAdmin.value) {
         return
     }
 
-    try {
-        const state = await $fetch('/api/maintenance/state')
-
-        if (state.enabled) {
-            return navigateTo('/maintenance')
-        }
-    } catch (error) {
-        console.error('Error checking maintenance state:', error)
+    // Если техобслуживание включено, перенаправляем
+    if (state.value.enabled) {
+        return navigateTo('/maintenance')
     }
 })

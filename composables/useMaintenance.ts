@@ -1,52 +1,97 @@
 // composables/useMaintenance.ts
 export const useMaintenance = () => {
-    const state = useState('maintenance', () => ({
+    const state = ref({
         enabled: false,
         enabledAt: null as number | null,
-        message: ''
-    }))
+        message: 'Сайт на техническом обслуживании'
+    })
 
-    const loadState = async () => {
-        try {
-            const newState = await $fetch('/api/maintenance/state')
-            state.value = newState
-        } catch (error) {
-            console.error('Failed to load maintenance state:', error)
+    // BroadcastChannel для синхронизации между вкладками
+    let broadcastChannel: BroadcastChannel | null = null
+
+    // Инициализация
+    const init = () => {
+        if (process.client) {
+            // Загружаем из localStorage
+            const saved = localStorage.getItem('maintenanceState')
+            if (saved) {
+                try {
+                    state.value = JSON.parse(saved)
+                } catch (e) {
+                    console.error('Error loading maintenance state:', e)
+                }
+            }
+
+            // Создаем канал для синхронизации
+            broadcastChannel = new BroadcastChannel('maintenance')
+
+            // Слушаем сообщения от других вкладок
+            broadcastChannel.onmessage = (event) => {
+                if (event.data.type === 'STATE_UPDATE') {
+                    state.value = event.data.state
+                    localStorage.setItem('maintenanceState', JSON.stringify(event.data.state))
+                }
+            }
         }
     }
 
-    const enableMaintenance = async () => {
-        try {
-            const newState = await $fetch('/api/maintenance/state', {
-                method: 'POST',
-                body: { enabled: true }
-            })
+    // Включение техобслуживания
+    const enable = (message?: string) => {
+        if (process.client) {
+            const newState = {
+                enabled: true,
+                enabledAt: Date.now(),
+                message: message || 'Сайт на техническом обслуживании'
+            }
+
             state.value = newState
-            return true
-        } catch (error) {
-            console.error('Failed to enable maintenance:', error)
-            return false
+            localStorage.setItem('maintenanceState', JSON.stringify(newState))
+
+            // Отправляем сообщение другим вкладкам
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({
+                    type: 'STATE_UPDATE',
+                    state: newState
+                })
+            }
         }
     }
 
-    const disableMaintenance = async () => {
-        try {
-            const newState = await $fetch('/api/maintenance/state', {
-                method: 'POST',
-                body: { enabled: false }
-            })
+    // Выключение техобслуживания
+    const disable = () => {
+        if (process.client) {
+            const newState = {
+                enabled: false,
+                enabledAt: null,
+                message: 'Сайт на техническом обслуживании'
+            }
+
             state.value = newState
-            return true
-        } catch (error) {
-            console.error('Failed to disable maintenance:', error)
-            return false
+            localStorage.setItem('maintenanceState', JSON.stringify(newState))
+
+            // Отправляем сообщение другим вкладкам
+            if (broadcastChannel) {
+                broadcastChannel.postMessage({
+                    type: 'STATE_UPDATE',
+                    state: newState
+                })
+            }
+        }
+    }
+
+    // Синхронизация состояния
+    const syncState = (newState: any) => {
+        state.value = newState
+        if (process.client) {
+            localStorage.setItem('maintenanceState', JSON.stringify(newState))
         }
     }
 
     return {
         state: readonly(state),
-        loadState,
-        enableMaintenance,
-        disableMaintenance
+        init,
+        enable,
+        disable,
+        syncState
     }
 }
