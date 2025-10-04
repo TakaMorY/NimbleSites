@@ -41,8 +41,8 @@ import { ref } from 'vue';
 import { onClickOutside } from '@vueuse/core';
 
 
-
-
+const { isAdmin } = useAuth()
+const { isMaintenanceEnabled } = useMaintenance()
 
 
 definePageMeta({
