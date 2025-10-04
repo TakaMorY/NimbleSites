@@ -5,41 +5,39 @@ export const useMaintenance = () => {
         enabledAt: null as number | null
     }))
 
-    // Автоматически загружаем сохраненное состояние при создании композабла
-    if (process.client) {
-        const saved = localStorage.getItem('maintenanceState')
-        if (saved) {
-            try {
-                maintenanceState.value = JSON.parse(saved)
-            } catch (e) {
-                localStorage.removeItem('maintenanceState')
-            }
+    // Загружаем состояние с сервера
+    const loadState = async () => {
+        try {
+            const state = await $fetch('/api/maintenance/state')
+            maintenanceState.value = state
+        } catch (error) {
+            console.error('Failed to load maintenance state:', error)
         }
     }
 
-    const enable = () => {
-        const newState = {
-            enabled: true,
-            enabledAt: Date.now()
-        }
-
-        maintenanceState.value = newState
-
-        if (process.client) {
-            localStorage.setItem('maintenanceState', JSON.stringify(newState))
+    // Включаем техобслуживание
+    const enable = async () => {
+        try {
+            const state = await $fetch('/api/maintenance/state', {
+                method: 'POST',
+                body: { enabled: true }
+            })
+            maintenanceState.value = state
+        } catch (error) {
+            console.error('Failed to enable maintenance:', error)
         }
     }
 
-    const disable = () => {
-        const newState = {
-            enabled: false,
-            enabledAt: null
-        }
-
-        maintenanceState.value = newState
-
-        if (process.client) {
-            localStorage.setItem('maintenanceState', JSON.stringify(newState))
+    // Выключаем техобслуживание
+    const disable = async () => {
+        try {
+            const state = await $fetch('/api/maintenance/state', {
+                method: 'POST',
+                body: { enabled: false }
+            })
+            maintenanceState.value = state
+        } catch (error) {
+            console.error('Failed to disable maintenance:', error)
         }
     }
 
@@ -47,6 +45,7 @@ export const useMaintenance = () => {
 
     return {
         maintenanceState: readonly(maintenanceState),
+        loadState,
         enable,
         disable,
         isMaintenanceEnabled

@@ -1,10 +1,7 @@
 // server/api/maintenance/state.get.ts
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
     const storage = useStorage('maintenance')
-    const state = await storage.getItem('maintenance:state')
+    const state = await storage.getItem('state')
 
-    return {
-        enabled: state?.enabled || false,
-        enabledAt: state?.enabledAt || null
-    }
+    return state || { enabled: false, enabledAt: null }
 })

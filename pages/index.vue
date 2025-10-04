@@ -42,8 +42,11 @@ import { onClickOutside } from '@vueuse/core';
 
 
 const { isAdmin } = useAuth()
-const { isMaintenanceEnabled } = useMaintenance()
-
+const { maintenanceState, loadState } = useMaintenance()
+// Загружаем состояние при монтировании
+onMounted(async () => {
+    await loadState()
+})
 
 definePageMeta({
     layout: 'default' // Явное указание layout

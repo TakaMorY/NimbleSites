@@ -3,14 +3,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-05-15',
   nitro: {
     storage: {
-      // Используем файловую систему для хранения состояний
+      // Используем файловую систему для хранения состояния
       maintenance: {
         driver: 'fs',
         base: './data/maintenance'
-      },
-      auth: {
-        driver: 'fs',
-        base: './data/auth'
       }
     }
   },

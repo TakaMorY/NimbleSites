@@ -1,25 +1,26 @@
 // middleware/maintenance.global.ts
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
     const { isAdmin } = useAuth()
-    const { isMaintenanceEnabled } = useMaintenance()
 
-    // Если техработы включены
-    if (isMaintenanceEnabled.value) {
-        // Админы имеют доступ ко всем страницам
-        if (isAdmin.value) {
-            return
-        }
+    // Для админов не применяем ограничения
+    if (isAdmin.value) {
+        return
+    }
 
-        // Обычные пользователи перенаправляются на страницу техработ
-        if (to.path !== '/maintenance') {
+    try {
+        // Получаем актуальное состояние с сервера
+        const state = await $fetch('/api/maintenance/state')
+
+        // Если техработы включены и пользователь не на странице техработ
+        if (state.enabled && to.path !== '/maintenance') {
             return navigateTo('/maintenance')
         }
-    }
-    // Если техработы выключены
-    else {
-        // Блокируем доступ к странице техработ для всех
-        if (to.path === '/maintenance') {
+
+        // Если техработы выключены и пользователь на странице техработ
+        if (!state.enabled && to.path === '/maintenance') {
             return navigateTo('/')
         }
+    } catch (error) {
+        console.error('Failed to check maintenance state:', error)
     }
 })
