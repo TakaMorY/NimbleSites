@@ -73,7 +73,5 @@ const style = `
 }
 `
 
-useHead({
-    style: [{ children: style }]
-})
+
 </script>
